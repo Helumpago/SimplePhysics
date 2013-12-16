@@ -17,7 +17,9 @@ class Base(object):
 	" @param Workspace p: The workspace that this object should be parented to
 	"""
 	def parent(self, p):
-		p.addObj(self)
+		if p != None:
+			p.addObj(self)
+			
 		self.p = p
 
 	"""

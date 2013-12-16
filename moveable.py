@@ -13,7 +13,8 @@ class Moveable(Physical):
 	"		but collisions with another object will act as though this object was moving.
 	" @param velocity: (int X, int Y): Vector indicating the direction the objec is moving.
 	"""
-	def __init__(self, velocity = (0, 0), canCollide = True, anchored = False): # = (0, 0)):
+	def __init__(self, velocity = (0, 0), canCollide = True, anchored = False, parent = None):
+		Physical.__init__(self, parent)
 		self.canCollide = canCollide
 		self.anchored = anchored
 		self.velocity = velocity

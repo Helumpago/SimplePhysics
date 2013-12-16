@@ -14,8 +14,8 @@ class Sphere(Drawable, Moveable):
 	" @param color: (int Red, int Green, int Blue): Color for this object
 	" @param pos: (int x, int y): Sphere's position
 	"""
-	def __init__(self, r = 1, pos = (0, 0), color = (255, 255, 255), velocity = (0, 0)):
-		Moveable.__init__(self, velocity)
+	def __init__(self, r = 1, pos = (0, 0), color = (255, 255, 255), velocity = (0, 0), parent = None):
+		Moveable.__init__(self, velocity, parent = parent)
 		self.radius = r
 		self.pos = pos
 		self.color = color

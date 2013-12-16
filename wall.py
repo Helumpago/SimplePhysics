@@ -14,8 +14,8 @@ class  Wall(Drawable, Moveable):
 	" @param (int x, int y) pos2: Position of the second corner of the wall
 	" @param color: (int Red, int Green, int Blue): Color for this object
 	"""
-	def __init__(self, pos1 = (0, 0), pos2 = (0, 0), color = (255, 255, 255)):
-		Moveable.__init__(self, anchored = True, velocity = (0, 0))
+	def __init__(self, pos1 = (0, 0), pos2 = (0, 0), color = (255, 255, 255), parent = None):
+		Moveable.__init__(self, anchored = True, velocity = (0, 0), parent = parent)
 		self.pos1 = pos1
 		self.pos2 = pos2
 		self.color = color
