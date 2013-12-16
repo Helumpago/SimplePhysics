@@ -11,3 +11,9 @@ class Workspace(object):
 		self.view = None # Reference to the Pygame window object
 		self.objects = []
 		self.lock = threading.Semaphore()
+
+	"""
+	" Adds a new object to this workspace
+	"""
+	def addObj(self, o):
+		self.objects.append(o)

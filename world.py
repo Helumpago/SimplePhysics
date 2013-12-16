@@ -45,9 +45,7 @@ class World(threading.Thread):
 	" Adds a new object to this world's workspace
 	"""
 	def addObj(self, o):
-		self.workspace.lock.acquire() # Unlock the workspace
-		self.workspace.objects.append(o)
-		self.workspace.lock.release()
+		self.workspace.addObj(o)
 
 	"""
 	" Render all drawable objects
