@@ -11,12 +11,3 @@ class Workspace(object):
 		self.view = None # Reference to the Pygame window object
 		self.objects = []
 		self.lock = threading.Semaphore()
-
-	"""
-	" Extends the dot operator so that the Semaphore for this object will be
-	" automatically acquired.
-	"""
-	def __getitem__(self, key):
-		self.lock.acquire()
-		o = object.__getitem__(self, key)
-		self.lock.release()
