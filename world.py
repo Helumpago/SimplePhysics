@@ -79,7 +79,7 @@ class World(threading.Thread):
 		while True:
 			clock = pygame.time.Clock()
 			dt = clock.tick(60) # Get the amount of time since the last frame ("Delta time")
-			self.workspace.lock.acquire()
+			#self.workspace.lock.acquire()
 
 			## Watch for events ##
 			for event in pygame.event.get():
@@ -90,4 +90,4 @@ class World(threading.Thread):
 			self.render()
 			self.step(dt)
 
-			self.workspace.lock.release()
+			#self.workspace.lock.release()
