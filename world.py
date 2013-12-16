@@ -48,6 +48,18 @@ class World(threading.Thread):
 		self.workspace.addObj(o)
 
 	"""
+	" Check system for events (collisions, exit signal, etc.)
+	"""
+	def collectEvents(self):
+		pass
+		## Watch for collisions ##
+		# for i in self.workspace.objects:
+		# 	for t in self.workspace.objects:
+		# 		if(i == t):
+		# 			continue
+
+
+	"""
 	" Render all drawable objects
 	"""
 	def render(self):
@@ -75,17 +87,15 @@ class World(threading.Thread):
 		self.open()
 
 		while True:
-			clock = pygame.time.Clock()
-			dt = clock.tick(60) # Get the amount of time since the last frame ("Delta time")
-			#self.workspace.lock.acquire()
-
-			## Watch for events ##
+			## Check Pygame events ##
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					self.close()
 					return
+			self.collectEvents()
 
-			self.render()
+			clock = pygame.time.Clock()
+			dt = clock.tick(60) # Get the amount of time since the last frame
+
 			self.step(dt)
-
-			#self.workspace.lock.release()
+			self.render()
