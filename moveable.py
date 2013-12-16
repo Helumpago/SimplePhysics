@@ -32,13 +32,13 @@ class Moveable(Physical):
 
 	"""
 	" Checks for collisions and moves this object accordingly
-	" @param window: Window: Container object describing the render window, scale, and
-	"		objects in this world
+	" @param Window window: Container for all objects being simulated, including details on the pygame window
+	" @param int dt: Number of milliseconds since the last frame
 	"""
-	def frame(self, window):
+	def frame(self, window, dt):
 		if(self.anchored == True):
 			return
 
 		pos = self.getPos()
-		pos = (pos[0] + self.velocity[0] * window.scale, pos[0] + self.velocity[1] * window.scale)
+		pos = (pos[0] + self.velocity[0] * (dt/1000) * window.scale, pos[0] + self.velocity[1] * (dt/1000) * window.scale)
 		self.setPos(pos)

@@ -15,7 +15,7 @@ class Sphere(Drawable, Moveable):
 	" @param pos: (int x, int y): Sphere's position
 	"""
 	def __init__(self, r = 1, pos = (0, 0), color = (255, 255, 255)):
-		Moveable.__init__(self, velocity = (4, 4))
+		Moveable.__init__(self, velocity = (1, 0))
 		self.radius = r
 		self.pos = pos
 		self.color = color
@@ -36,4 +36,5 @@ class Sphere(Drawable, Moveable):
 	" Draw this object to the window
 	"""
 	def draw(self, window):
-		pygame.draw.circle(window.view, self.color, self.pos, self.radius * window.scale, 0)
+		pos = (round(self.pos[0]), round(self.pos[1]))
+		pygame.draw.circle(window.view, self.color, pos, self.radius * window.scale, 0)

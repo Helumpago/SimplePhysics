@@ -63,11 +63,12 @@ class World(threading.Thread):
 
 	"""
 	" Generate the next physics frame
+	" @param int dt: Number of milliseconds since the last frame
 	"""
-	def step(self):
+	def step(self, dt):
 		for o in self.workspace.objects:
 				if isinstance(o, Physical):
-					o.frame(self.workspace)
+					o.frame(self.workspace, dt)
 
 	"""
 	" Main execution loop for the simulation
@@ -76,6 +77,8 @@ class World(threading.Thread):
 		self.open()
 
 		while True:
+			clock = pygame.time.Clock()
+			dt = clock.tick(60) # Get the amount of time since the last frame ("Delta time")
 			self.workspace.lock.acquire()
 
 			## Watch for events ##
@@ -85,7 +88,6 @@ class World(threading.Thread):
 					return
 
 			self.render()
-			self.step()
+			self.step(dt)
 
 			self.workspace.lock.release()
-			time.sleep(self.workspace.delay)
