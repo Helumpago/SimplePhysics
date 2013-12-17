@@ -8,6 +8,7 @@ from drawable import Drawable
 from physical import Physical
 from workspace import Workspace
 from sphere import Sphere
+from moveable import Moveable
 
 """
 " Manages the simulation
@@ -48,16 +49,21 @@ class World(threading.Thread):
 		self.workspace.addObj(o)
 
 	"""
-	" Check system for events (collisions, exit signal, etc.)
+	" Check system for events (collisions, etc.)
 	"""
 	def collectEvents(self):
-		pass
 		## Watch for collisions ##
-		# for i in self.workspace.objects:
-		# 	for t in self.workspace.objects:
-		# 		if(i == t):
-		# 			continue
+		for i in self.workspace.objects:
+			if isinstance(i, Moveable) != True: # Only check moveable objects for collisions
+				continue
 
+			for t in self.workspace.objects:
+				if i == t or (isinstance(t, Moveable) != True): 
+					continue
+
+				if t.onPoint(t.getPos()): # Check for an intersection between objects
+					pass
+					# Do event stuff
 
 	"""
 	" Render all drawable objects
