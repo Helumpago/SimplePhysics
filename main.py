@@ -8,13 +8,20 @@ from workspace import Workspace
 from base_obj import BaseObj
 
 class thing(BaseObj):
-	def __init__(self, name = "object", parent = None):
-		BaseObj.__init__(self, name, parent)
+	def __init__(self, Name = "object", parent = None):
+		BaseObj.__init__(self, Name, parent)
 
-w = Workspace(Vector2d(1000, 100))
+w = Workspace(windowSize = Vector2d((1000, 500)))
 
-t1 = thing(parent = w)
+t1 = thing()
+thing(parent = w)
+thing(parent = w, Name = "Thing")
+t1.setParent(target = w)
 
 w.start()
 
-print("Hi!")
+for o in w.getChildren("object"):
+	print(o.Name)
+
+print()
+print(w.getChild("Thing").Name)

@@ -9,6 +9,7 @@ class BaseObj(object):
 	"""
 	def __init__(self, Name = "object", parent = None):
 		self.Name = Name
+		self.parent = None
 		self.setParent(parent)
 
 	"""
@@ -16,7 +17,9 @@ class BaseObj(object):
 	" @param Workspace target: Reference to the workspace to which this object should be parented
 	"""
 	def setParent(self, target):
-		if(target != None):
+		if self.parent == target:
+			return
+		elif target != None:
 			target.addChild(self)
-
+		
 		self.parent = target

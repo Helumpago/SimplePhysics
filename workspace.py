@@ -15,7 +15,7 @@ class Workspace(BaseObj, threading.Thread):
 	" @param Vector2d windowSize:  Defines the size of the window in pixels
 	" @param int scale: Defines the window's scale.  In units of pixels per distance unit.
 	"""
-	def __init__(self, Name = "Workspace", windowSize = Vector2d(256, 256), scale = 1):
+	def __init__(self, Name = "Workspace", windowSize = Vector2d((256, 256)), scale = 1):
 		BaseObj.__init__(self, Name)
 		threading.Thread.__init__(self)
 		self.windowSize = windowSize
@@ -47,6 +47,31 @@ class Workspace(BaseObj, threading.Thread):
 			self.children[child.Name] = [] # Define a new list of subobjects matching the given name
 
 		self.children[child.Name].append(child) # Add the new child
+
+	"""
+	" Gets the first child that has a given name
+	" @param string name: Name of the child to look for
+	" @return: Reference to the first object with the given name.
+	" 		Returns None if no object with that name was found.
+	"""
+	def getChild(self, name):
+		## Check if there are any children with the given name ##
+		try:
+			self.children[name]
+		except KeyError:
+			return None
+		return self.children[name][0] # Get the first object with the given name
+
+	"""
+	" Gets all children that have a given name
+	" @param string name: Object name to look for
+	"""
+	def getChildren(self, name):
+		try:
+			self.children[name]
+		except KeyError:
+			return None
+		return self.children[name] # Get all objects with the given name
 
 	"""
 	" Main execution loop for the simulation, as well as the entry point

@@ -11,14 +11,6 @@ class Vector2d(object):
 		self.pos = pos
 
 	"""
-	" CONSTRUCTOR
-	" @param int x: X position of the vector
-	" @param int y: Y position of the vector
-	"""
-	def __init__(self, x, y):
-		self.pos = (x, y)
-
-	"""
 	" Allow the vector to be indexed with "x" and "y"
 	"""
 	def __getattribute__(self, name):
@@ -38,4 +30,4 @@ class Vector2d(object):
 		elif key == "y":
 			object.__setattr__(self, "pos", (self.x, value))
 		else:
-			object.__setattr__(self, "pos", value)
+			object.__setattr__(self, key, value)
