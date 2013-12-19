@@ -74,6 +74,18 @@ class Workspace(BaseObj, threading.Thread):
 		return self.children[name] # Get all objects with the given name
 
 	"""
+	" Render the current frame
+	"""
+	def render(self):
+		self.view.lock()
+		self.view.fill((0, 0, 0))
+		for name in self.children:
+			for o in self.getChildren(name):
+				o.draw()
+		self.view.unlock()
+		pygame.display.update()
+
+	"""
 	" Main execution loop for the simulation, as well as the entry point
 	" for when the Workspace becomes a separate thread
 	"""
@@ -83,11 +95,16 @@ class Workspace(BaseObj, threading.Thread):
 			return
 		pygame.init()
 		self.view = pygame.display.set_mode((self.windowSize.x, self.windowSize.y), 0, 32)
+		clock = pygame.time.Clock()
 
 		## Main execution loop ##
 		while True:
+			dt = clock.tick(60) # Get the amount of time since the last frame
+
 			## Check Pygame events ##
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					self.close()
 					return
+
+			self.render()		

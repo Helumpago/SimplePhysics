@@ -6,6 +6,7 @@ class BaseObj(object):
 	"""
 	" CONSTRUCTOR
 	" @param string name: Name for this object
+	" @param Workspace parent: Reference to the workspace this object should be parented to
 	"""
 	def __init__(self, Name = "object", parent = None):
 		self.Name = Name

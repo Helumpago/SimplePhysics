@@ -5,23 +5,10 @@
 
 from vector2d import Vector2d
 from workspace import Workspace
-from base_obj import BaseObj
+from circle import Circle
 
-class thing(BaseObj):
-	def __init__(self, Name = "object", parent = None):
-		BaseObj.__init__(self, Name, parent)
+w = Workspace(windowSize = Vector2d((1000, 500)), scale = 1)
 
-w = Workspace(windowSize = Vector2d((1000, 500)))
-
-t1 = thing()
-thing(parent = w)
-thing(parent = w, Name = "Thing")
-t1.setParent(target = w)
+Circle(parent = w, radius = 5, pos = Vector2d((100, 50)), color = (50, 250, 150))
 
 w.start()
-
-for o in w.getChildren("object"):
-	print(o.Name)
-
-print()
-print(w.getChild("Thing").Name)
