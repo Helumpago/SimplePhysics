@@ -4,6 +4,8 @@ from pygame.locals import *
 import threading
 from vector2d import Vector2d
 from base_obj import BaseObj
+from drawable import Drawable
+from physical import Physical
 
 """
 " Manages the simulation
@@ -81,9 +83,20 @@ class Workspace(BaseObj, threading.Thread):
 		self.view.fill((0, 0, 0))
 		for name in self.children:
 			for o in self.getChildren(name):
-				o.draw()
+				if(isinstance(o, Drawable)):
+					o.draw()
 		self.view.unlock()
 		pygame.display.update()
+
+	"""
+	" Move to the next frame in the simulation
+	" @param int dt: Number of milliseconds since the last frame
+	"""
+	def step(self, dt):
+		for name in self.children:
+			for o in self.getChildren(name):
+				if(isinstance(o, Physical)):
+					o.step(dt)
 
 	"""
 	" Main execution loop for the simulation, as well as the entry point
@@ -107,4 +120,5 @@ class Workspace(BaseObj, threading.Thread):
 					self.close()
 					return
 
-			self.render()		
+			self.render()
+			self.step(dt)
