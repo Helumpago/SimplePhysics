@@ -41,7 +41,6 @@ class Circle(Moveable, Drawable):
 	" Draw this object to the window
 	"""
 	def draw(self):
-
 		if self.parent == None:
 			return
 
