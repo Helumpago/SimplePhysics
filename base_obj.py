@@ -48,6 +48,12 @@ class BaseObj(object):
 			self.callbacks[event] = [cb]
 
 	"""
+	" Runs the callbacks for all fired events
+	"""
+	def fireEvents(self):
+		pass
+
+	"""
 	" Extends the dot operator so that the Semaphore for this object will be
 	" automatically acquired.
 	"""

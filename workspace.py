@@ -90,16 +90,22 @@ class Workspace(BaseObj, threading.Thread):
 		pygame.display.update()
 
 	"""
-	" Move to the next frame in the simulation
-	" @param int dt: Number of milliseconds since the last frame
+	" Runs the callbacks for all fired events
 	"""
-	def step(self, dt):
-		## Run callbacks ##
+	def fireEvents(self):
+		BaseObj.fireEvents(self)
 		try:
 			for cb in self.events[events.QUIT]:
 				cb(self)
 		except KeyError:
 			pass
+
+	"""
+	" Move to the next frame in the simulation
+	" @param int dt: Number of milliseconds since the last frame
+	"""
+	def step(self, dt):
+		self.fireEvents()
 
 		## Step child object's frames ##
 		for name in self.children:
@@ -131,12 +137,6 @@ class Workspace(BaseObj, threading.Thread):
 		## Main execution loop ##
 		while True:
 			dt = clock.tick(60) # Get the amount of time since the last frame
-
-			## Check Pygame events ##
-			# for event in pygame.event.get():
-			# 	if event.type == QUIT:
-			# 		self.close()
-			# 		return
 
 			self.collectEvents()
 			self.render()
