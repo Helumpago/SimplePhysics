@@ -60,21 +60,30 @@ class Workspace(BaseObj, threading.Thread):
 	def getChild(self, name):
 		## Check if there are any children with the given name ##
 		try:
-			self.children[name]
+			return self.children[name][0]
 		except KeyError:
 			return None
-		return self.children[name][0] # Get the first object with the given name
 
 	"""
 	" Gets all children that have a given name
-	" @param string name: Object name to look for
+	" @param string name: Object name to look for.  If name == None, all children will be concatenated into a single list and returned
+	" @return: List of all objects with the given name
 	"""
-	def getChildren(self, name):
+	def getChildren(self, name = None):
+		## Non-specific name ##
+		if name == None:
+			l = []
+			for v in self.children.values():
+				for o in v:
+					l.append(o)
+
+			return l
+
+		## Specific name ##
 		try:
-			self.children[name]
+			return self.children[name]
 		except KeyError:
 			return None
-		return self.children[name] # Get all objects with the given name
 
 	"""
 	" Render the current frame
@@ -139,5 +148,5 @@ class Workspace(BaseObj, threading.Thread):
 			dt = clock.tick(60) # Get the amount of time since the last frame
 
 			self.collectEvents()
-			self.render()
 			self.step(dt)
+			self.render()

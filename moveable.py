@@ -41,3 +41,6 @@ class Moveable(Physical):
 		pos = self.getPos()
 		pos = Vector2d((pos.x + self.velocity.x * (dt/1000) * self.parent.scale, pos.y + self.velocity.y * (dt/1000) * self.parent.scale))
 		self.setPos(pos)
+
+	def collectEvents(self):
+		Physical.collectEvents(self)
