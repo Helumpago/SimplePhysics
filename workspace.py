@@ -105,7 +105,7 @@ class Workspace(BaseObj, threading.Thread):
 		BaseObj.fireEvents(self)
 		try:
 			for cb in self.events[events.QUIT]:
-				cb(self)
+				cb.call()
 		except KeyError:
 			pass
 
@@ -129,7 +129,11 @@ class Workspace(BaseObj, threading.Thread):
 		## Check pygame events ##
 		for event in pygame.event.get():
 			if event.type == QUIT:
-				self.events[events.QUIT] = self.callbacks[events.QUIT]
+				for cb in self.callbacks[events.QUIT]:
+					try:
+						self.events[events.QUIT].append(events.QUIT(workspace = self, callback = cb)) 
+					except KeyError:
+						self.events[events.QUIT] = [events.QUIT(workspace = self, callback = cb)]
 
 	"""
 	" Main execution loop for the simulation, as well as the entry point

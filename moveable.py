@@ -1,6 +1,7 @@
 
 from physical import Physical
 from vector2d import Vector2d
+import events
 
 """
 " Defines an object that can participate in collisions
@@ -31,6 +32,15 @@ class Moveable(Physical):
 		pass
 
 	"""
+	" Get whether a given point is inside this object
+	" @param Vector2d pos: Point to check
+	" @return: None if the point is not contained in this shape.  Otherwise,
+	" 		returns a Vector2d value that represents the normal unit vector of the collision
+	"""
+	def hasPoint(self, pos):
+		return None
+
+	"""
 	" Move this shape according to its velocity
 	" @param int dt: Number of milliseconds since the last frame
 	"""
@@ -42,5 +52,30 @@ class Moveable(Physical):
 		pos = Vector2d((pos.x + self.velocity.x * (dt/1000) * self.parent.scale, pos.y + self.velocity.y * (dt/1000) * self.parent.scale))
 		self.setPos(pos)
 
+	"""
+	" Check for collisions
+	"""
 	def collectEvents(self):
 		Physical.collectEvents(self)
+
+		## Check for collisions with this object ##
+		# allObjs = self.parent.getChildren()
+		# for o in allObjs:
+		# 	## Ignore this object and any non-moveable objects##
+		# 	if (isinstance(o, Moveable) != True) or (o == self):
+		# 		continue
+
+		# 	## If the current object isn't colliding with this object, skip ##
+		# 	if o.hasPoint(self.getPos()) == None:
+		# 		continue
+
+		# 	## If the current object is colliding ##
+		# 	try:
+		# 		cbs = self.events[events.COLLISION] # get all registered callbacks
+		# 	except: KeyError # If there are no registered callbacks, all collisions are ignored, so break out of the loop
+		# 		break
+
+		# 	## Create a new sequence of parameterized callbacks for this collision ##
+		# 	thisCollision = [] # List of specific collision events for this collision
+		# 	for cb in cbs:
+		# 		ev = events.COLLISION(hit = o)

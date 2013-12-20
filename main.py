@@ -26,8 +26,6 @@ Wall(parent = w, pos1 = Vector2d((w.windowSize.x - 1, 0)), pos2 = Vector2d((w.wi
 
 w.start()
 
-print(w.getChildren())
-
 time.sleep(1)
 c.pos = Vector2d((50, 200))
 time.sleep(1)
