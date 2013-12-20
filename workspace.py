@@ -96,7 +96,7 @@ class Workspace(BaseObj, threading.Thread):
 	def step(self, dt):
 		## Run callbacks ##
 		try:
-			for cb in self.events[events.QUIT.string]:
+			for cb in self.events[events.QUIT]:
 				cb(self)
 		except KeyError:
 			pass
@@ -114,7 +114,7 @@ class Workspace(BaseObj, threading.Thread):
 		## Check pygame events ##
 		for event in pygame.event.get():
 			if event.type == QUIT:
-				self.events[events.QUIT.string] = self.callbacks[events.QUIT.string]
+				self.events[events.QUIT] = self.callbacks[events.QUIT]
 
 	"""
 	" Main execution loop for the simulation, as well as the entry point

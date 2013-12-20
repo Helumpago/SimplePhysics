@@ -7,8 +7,6 @@
 " Base event class
 """
 class EVENT(object):
-	string = "EVENT" # Unique string to index dictionaries off of
-
 	"""
 	" CONSTRUCTOR
 	"""
@@ -25,8 +23,6 @@ class EVENT(object):
 " Fired when Pygame asks to exit
 """
 class QUIT(EVENT):
-	string = "QUIT" # Unique string to index dictionaries off of
-
 	def __init__(self, callback = None):
 		EVENT.__init__(self, callback)
 

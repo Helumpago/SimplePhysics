@@ -43,9 +43,9 @@ class BaseObj(object):
 	def registerCallback(self, event, cb):
 		## Check if a list of callbacks for this event already exists##
 		try:
-			self.callbacks[event.string].append(cb)
+			self.callbacks[event].append(cb)
 		except KeyError:
-			self.callbacks[event.string] = [cb]
+			self.callbacks[event] = [cb]
 
 	"""
 	" Extends the dot operator so that the Semaphore for this object will be
