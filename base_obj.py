@@ -15,6 +15,8 @@ class BaseObj(object):
 		self.parent = None
 		self.setParent(parent)
 		self.lock = threading.Semaphore()
+		self.callbacks = {} # Contains all registered callbacks.  Key: Event type; Value: List of callbacks
+		self.events = {} # Contains all fired events. Key: Event type; Value: List of callbacks
 
 	"""
 	" Sets the parent workspace for this object
@@ -26,6 +28,24 @@ class BaseObj(object):
 		elif target != None:
 			target.addChild(self)
 		self.parent = target
+
+	"""
+	" Get all the events for this object that have been fired
+	"""
+	def collectEvents(self):
+		pass
+
+	"""
+	" Add a callback to an event
+	" @param EVENT event: Type of event
+	" @param callable cb: Function to call when event fires
+	"""
+	def registerCallback(self, event, cb):
+		## Check if a list of callbacks for this event already exists##
+		try:
+			self.callbacks[event.string].append(cb)
+		except KeyError:
+			self.callbacks[event.string] = [cb]
 
 	"""
 	" Extends the dot operator so that the Semaphore for this object will be

@@ -6,6 +6,7 @@ from vector2d import Vector2d
 from base_obj import BaseObj
 from drawable import Drawable
 from physical import Physical
+import events
 
 """
 " Manages the simulation
@@ -93,10 +94,27 @@ class Workspace(BaseObj, threading.Thread):
 	" @param int dt: Number of milliseconds since the last frame
 	"""
 	def step(self, dt):
+		## Run callbacks ##
+		try:
+			for cb in self.events[events.QUIT.string]:
+				cb(self)
+		except KeyError:
+			pass
+
+		## Step child object's frames ##
 		for name in self.children:
 			for o in self.getChildren(name):
 				if(isinstance(o, Physical)):
 					o.step(dt)
+
+	"""
+	" Get all the events for this object that have been fired
+	"""
+	def collectEvents(self):
+		## Check pygame events ##
+		for event in pygame.event.get():
+			if event.type == QUIT:
+				self.events[events.QUIT.string] = self.callbacks[events.QUIT.string]
 
 	"""
 	" Main execution loop for the simulation, as well as the entry point
@@ -115,10 +133,11 @@ class Workspace(BaseObj, threading.Thread):
 			dt = clock.tick(60) # Get the amount of time since the last frame
 
 			## Check Pygame events ##
-			for event in pygame.event.get():
-				if event.type == QUIT:
-					self.close()
-					return
+			# for event in pygame.event.get():
+			# 	if event.type == QUIT:
+			# 		self.close()
+			# 		return
 
+			self.collectEvents()
 			self.render()
 			self.step(dt)
