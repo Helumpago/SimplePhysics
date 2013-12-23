@@ -42,7 +42,7 @@ class Moveable(Physical):
 
 	"""
 	" Move this shape according to its velocity
-	" @param int dt: Number of milliseconds since the last frame
+	" @param number dt: Number of milliseconds since the last frame
 	"""
 	def step(self, dt):
 		if(self.anchored == True):
@@ -54,6 +54,7 @@ class Moveable(Physical):
 
 	"""
 	" Check for collisions
+	" @param number dt: Number of milliseconds since the last frame
 	"""
-	def collectEvents(self):
-		Physical.collectEvents(self)
+	def collectEvents(self, dt):
+		Physical.collectEvents(self, dt)

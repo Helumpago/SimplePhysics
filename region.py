@@ -33,15 +33,15 @@ class Region(Physical):
 	"""
 	" Get and fire events for all objects inside this region
 	"""
-	def collectEvents(self):
-		Physical.collectEvents(self)
+	def collectEvents(self, dt):
+		Physical.collectEvents(self, dt)
 
 		for o in self.getObjs():
 			for cb in self.callbacks[events.INREGION]:
 				try:
-					self.events[events.INREGION].append(events.INREGION(hit = o, callback = cb)) 
+					self.events[events.INREGION].append(events.INREGION(hit = o, callback = cb, dt = dt)) 
 				except KeyError:
-					self.events[events.INREGION] = [events.INREGION(hit = o, callback = cb)]
+					self.events[events.INREGION] = [events.INREGION(hit = o, callback = cb, dt = dt)]
 
 	"""
 	" Runs the callbacks for all fired events

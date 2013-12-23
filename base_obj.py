@@ -31,8 +31,9 @@ class BaseObj(object):
 
 	"""
 	" Get all the events for this object that have been fired
+	" @param number dt: Number of milliseconds since the last frame
 	"""
-	def collectEvents(self):
+	def collectEvents(self, dt):
 		pass
 
 	"""

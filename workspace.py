@@ -124,8 +124,9 @@ class Workspace(BaseObj, threading.Thread):
 
 	"""
 	" Get all the events for this object that have been fired
+	" @param number dt: Number of milliseconds since the last frame
 	"""
-	def collectEvents(self):
+	def collectEvents(self, dt):
 		## Check pygame events ##
 		for event in pygame.event.get():
 			if event.type == QUIT:
@@ -138,7 +139,7 @@ class Workspace(BaseObj, threading.Thread):
 		## Allow child objects to collect events ##
 		for c in self.getChildren():
 			if isinstance(c, BaseObj):
-				c.collectEvents()
+				c.collectEvents(dt)
 
 	"""
 	" Main execution loop for the simulation, as well as the entry point
@@ -156,6 +157,6 @@ class Workspace(BaseObj, threading.Thread):
 		while True:
 			dt = clock.tick(60) # Get the amount of time since the last frame
 
-			self.collectEvents()
+			self.collectEvents(dt)
 			self.step(dt)
 			self.render()
