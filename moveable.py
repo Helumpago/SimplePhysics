@@ -58,24 +58,43 @@ class Moveable(Physical):
 	def collectEvents(self):
 		Physical.collectEvents(self)
 
+		## If this object is anchored, ignore all collision events ##
+		if self.canCollide == False or self.anchored == True:
+			return
+
 		## Check for collisions with this object ##
-		# allObjs = self.parent.getChildren()
-		# for o in allObjs:
-		# 	## Ignore this object and any non-moveable objects##
-		# 	if (isinstance(o, Moveable) != True) or (o == self):
-		# 		continue
+		allObjs = self.parent.getChildren()
+		for o in allObjs:
+			## Ignore this object and any non-moveable objects##
+			if (isinstance(o, Moveable) != True) or (o == self):
+				continue
 
-		# 	## If the current object isn't colliding with this object, skip ##
-		# 	if o.hasPoint(self.getPos()) == None:
-		# 		continue
+			## If the current object isn't colliding with this object, skip ##
+			if o.hasPoint(self.getPos()) == None:
+				continue
 
-		# 	## If the current object is colliding ##
-		# 	try:
-		# 		cbs = self.events[events.COLLISION] # get all registered callbacks
-		# 	except: KeyError # If there are no registered callbacks, all collisions are ignored, so break out of the loop
-		# 		break
+			## If the current object is colliding ##
+			try:
+				cbs = self.events[events.COLLISION] # get all registered callbacks
+			except KeyError: # If there are no registered callbacks, all collisions are ignored, so break out of the loop
+				break
 
-		# 	## Create a new sequence of parameterized callbacks for this collision ##
-		# 	thisCollision = [] # List of specific collision events for this collision
-		# 	for cb in cbs:
-		# 		ev = events.COLLISION(hit = o)
+			## Create a new sequence of parameterized callbacks for this collision ##
+			thisCollision = [] # List of specific collision events for this collision
+			for cb in cbs:
+				ev = events.COLLISION(hit = o, callback = cb)
+				thisCollision.append(ev)
+
+			self.events += thisCollision # Append the new set of collision callbacks
+
+	"""
+	" Runs the callbacks for all fired events
+	"""
+	def fireEvents(self):
+		Physical.fireEvents(self)
+
+		try:
+			for cb in self.events(events.COLLISION):
+				cb.call()
+		except KeyError:
+			pass
