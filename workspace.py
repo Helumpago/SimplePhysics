@@ -40,7 +40,7 @@ class Workspace(BaseObj, threading.Thread):
 	"""
 	def addChild(self, child):
 		## Ensure that the child is of the correct type ##
-		if(isinstance(child, BaseObj) != True):
+		if isinstance(child, BaseObj) != True:
 			raise TypeError("Attempt to parent a non-BaseObj type")
 
 		## Check if a list of subobjects with this name already exist ##
@@ -134,6 +134,11 @@ class Workspace(BaseObj, threading.Thread):
 						self.events[events.QUIT].append(events.QUIT(workspace = self, callback = cb)) 
 					except KeyError:
 						self.events[events.QUIT] = [events.QUIT(workspace = self, callback = cb)]
+
+		## Allow child objects to collect events ##
+		for c in self.getChildren():
+			if isinstance(c, BaseObj):
+				c.collectEvents()
 
 	"""
 	" Main execution loop for the simulation, as well as the entry point

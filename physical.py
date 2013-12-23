@@ -18,4 +18,4 @@ class Physical(BaseObj):
 	" @param int dt: Number of milliseconds since the last frame
 	"""
 	def step(self, dt):
-		pass
+		self.fireEvents()

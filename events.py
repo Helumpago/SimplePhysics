@@ -50,3 +50,19 @@ class COLLISION(EVENT):
 
 	def call(self):
 		self.callback(self.hit)
+
+"""
+" Fired for every Moveable object that is considered inside a region
+"""
+class INREGION(EVENT):
+	"""
+	" CONSTRUCTOR
+	" @param Moveable hit: Object that this object collided with
+	" @param callable callback: Method to call when this event is fired
+	"""
+	def __init__(self, hit, callback = None):
+		EVENT.__init__(self, callback)
+		self.hit = hit
+
+	def call(self):
+		self.callback(self.hit)

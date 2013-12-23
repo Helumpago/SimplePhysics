@@ -34,12 +34,3 @@ class Wall(Moveable, Drawable):
 		pos1 = Vector2d((round(self.pos1.x * self.parent.scale), round(self.pos1.y * self.parent.scale)))
 		pos2 = Vector2d((round(self.pos2.x * self.parent.scale), round(self.pos2.y * self.parent.scale)))
 		pygame.draw.line(self.parent.view, self.color, pos1.pos, pos2.pos, 1)
-
-	"""
-	" Get whether a given point is inside this object
-	" @param Vector2d pos: Point to check
-	" @return: None if the point is not contained in this shape.  Otherwise,
-	" 		returns a Vector2d value that represents the normal unit vector of the collision
-	"""
-	def hasPoint(self, pos):
-		
