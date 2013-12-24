@@ -18,7 +18,7 @@ class EVENT(object):
 	" Run the given callback
 	"""
 	def call(self):
-		self.callback()
+		self.callback(self)
 
 """
 " Fired when Pygame asks to exit
@@ -32,9 +32,6 @@ class QUIT(EVENT):
 		EVENT.__init__(self, callback)
 		self.workspace = workspace
 
-	def call(self):
-		self.callback(self.workspace)
-
 """
 " Fired when a collision occurs between two Moveable objects
 """
@@ -47,9 +44,6 @@ class COLLISION(EVENT):
 	def __init__(self, hit, callback = None):
 		EVENT.__init__(self, callback)
 		self.hit = hit
-
-	def call(self):
-		self.callback(self.hit)
 
 """
 " Fired for every Moveable object that is considered inside a region
@@ -65,6 +59,3 @@ class INREGION(EVENT):
 		EVENT.__init__(self, callback)
 		self.hit = hit
 		self.dt = dt
-
-	def call(self):
-		self.callback(self.hit, self.dt)

@@ -34,3 +34,21 @@ class Wall(Moveable, Drawable):
 		pos1 = Vector2d((round(self.pos1.x * self.parent.scale), round(self.pos1.y * self.parent.scale)))
 		pos2 = Vector2d((round(self.pos2.x * self.parent.scale), round(self.pos2.y * self.parent.scale)))
 		pygame.draw.line(self.parent.view, self.color, pos1.pos, pos2.pos, 1)
+
+	"""
+	" Get the shape's position
+	" @return: Vector2d indicating the shape's position
+	"""
+	def getPos(self):
+		return self.pos1
+
+	"""
+	" Set the shape's position
+	" @param Vector2d pos: New position
+	"""
+	def setPos(self, pos):
+		dx = pos.x - self.pos1.x
+		dy = pos.y - self.pos1.y
+
+		self.pos1 = pos
+		self.pos2 = Vector2d((pos.x + self.pos2.x, pos.y + self.pos2.y))

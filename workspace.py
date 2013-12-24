@@ -119,7 +119,7 @@ class Workspace(BaseObj, threading.Thread):
 		## Step child object's frames ##
 		for name in self.children:
 			for o in self.getChildren(name):
-				if(isinstance(o, Physical)):
+				if isinstance(o, Physical):
 					o.step(dt)
 
 	"""
