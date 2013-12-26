@@ -3,6 +3,7 @@
 " Test script for Phy
 """
 
+from pygame_model import PygameModel
 from base_obj import BaseObj
 from drawable import Drawable
 import events
@@ -15,14 +16,5 @@ def printChildren(obj, depth = 1):
 	for o in obj.getChildren():
 		printChildren(o, depth + 1)
 
-w = BaseObj(Name = "Workspace")
-BaseObj(Name = "Object", parent = w)
-BaseObj(Name = "Object", parent = w)
-BaseObj(Name = "Object", parent = w)
-t = BaseObj(Name = "Thing", parent = w.getFirst("Object"))
-
-printChildren(w)
-
-print("-------")
-w.getChildren("Object")[1].parent = t
-printChildren(w)
+w = PygameModel(fps = 1)
+w.start()

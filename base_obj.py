@@ -62,6 +62,7 @@ class NamedDictionary(collections.MutableMapping):
 
 """
 " Base class for all objects that can be placed in the scene graph
+" Defines an object that can do something during the model stage.
 """
 class BaseObj(object):
 	"""
@@ -155,3 +156,17 @@ class BaseObj(object):
 			return
 
 		self.setParent(value)
+
+	"""
+	" Actions for this object to perform during the modeling stage
+	"""
+	def step(self):
+		pass
+
+	"""
+	" Allows this object and all its children to generate their next step
+	"""
+	def __step__(self):
+		self.step()
+		for o in self.getChildren():
+			o.__step__()

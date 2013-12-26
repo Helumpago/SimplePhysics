@@ -1,17 +1,25 @@
 
 """
-" Defines an object that can be drawn onto the screen during the render cycle
+" Defines an object that can do stuff during the render cycle
 """
 class Drawable(object):
 	"""
 	" CONSTRUCTOR
-	" @param (int R, int G, int B) color: RGB color value for this object
 	"""
-	def __init__(self, color = (0, 0, 0)):
-		self.color = color
+	def __init__(self):
+		pass
 
 	"""
-	" Draws this object to the given screen
+	" What this object should do during the render stage
 	"""
 	def draw(self):
-		raise NotImplementedError("Draw method left unimplemented")
+		pass
+
+	"""
+	" Allows this object and all its children to render themselves
+	"""
+	def __draw__(self):
+		self.draw()
+		for o in self.getChildren():
+			if isinstance(o, Drawable):
+				o.__draw__(self)
