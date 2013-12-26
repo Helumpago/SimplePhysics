@@ -22,4 +22,4 @@ class Drawable(object):
 		self.draw()
 		for o in self.getChildren():
 			if isinstance(o, Drawable):
-				o.__draw__(self)
+				o.__draw__()

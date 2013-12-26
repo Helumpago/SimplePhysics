@@ -12,7 +12,7 @@ class PygameModel(Model):
 	" @param string Name: Name for this object.
 	" @param int fps: Maximum number of frames per second allowable.
 	"""
-	def __init__(self, Name = "Model", fps = 60):
+	def __init__(self, Name = "PygameModel", fps = 60):
 		Model.__init__(self, Name = Name, fps = fps)
 		self.clock = pygame.time.Clock()
 
@@ -24,6 +24,3 @@ class PygameModel(Model):
 	"""
 	def tick(self, t):
 		return self.clock.tick(t)
-
-	def step(self):
-		print("Hi!")

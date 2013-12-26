@@ -17,6 +17,7 @@ class Model(BaseObj, Drawable, threading.Thread):
 	"""
 	def __init__(self, Name = "Model", fps = 60):
 		BaseObj.__init__(self, parent = None, Name = Name)
+		Drawable.__init__(self)
 		threading.Thread.__init__(self)
 		self.fps = fps
 
