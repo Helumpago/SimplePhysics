@@ -4,7 +4,7 @@
 """
 
 from base_obj import BaseObj
-import drawable
+from drawable import Drawable
 import events
 
 def printChildren(obj, depth = 1):
