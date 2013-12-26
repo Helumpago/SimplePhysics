@@ -5,7 +5,7 @@ from drawable import Drawable
 
 """
 " Controls the flow of the simulation. In other words,
-" 	this object controls the event, model, render loop.
+" 	this object defines the event-model-render loop.
 " This object is the root of the scene graph for all
 " 	simulations
 """

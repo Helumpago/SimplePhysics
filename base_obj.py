@@ -1,5 +1,6 @@
 
 import collections
+import threading
 
 ## Exception definitions ##
 class ParentError(Exception):
@@ -72,6 +73,7 @@ class BaseObj(object):
 	" @param string Name: Name for this object.
 	"""
 	def __init__(self, parent = None, Name = "Object"):
+		object.__setattr__(self, "lock", threading.Semaphore())
 		self.children = NamedDictionary() # Set of children that belong to this object
 		self.Name = Name
 		object.__setattr__(self, "parent", None)
@@ -151,11 +153,13 @@ class BaseObj(object):
 	" Allow setParent to be called by directly setting the parent attribute
 	"""
 	def __setattr__(self, key, value):
+		self.lock.acquire()
 		if key != "parent":
 			object.__setattr__(self, key, value)
-			return
+		else:
+			self.setParent(value)
 
-		self.setParent(value)
+		self.lock.release()
 
 	"""
 	" Actions for this object to perform during the modeling stage
@@ -170,3 +174,12 @@ class BaseObj(object):
 		self.step()
 		for o in self.getChildren():
 			o.__step__()
+
+	"""
+	" Allow automatic thread synchronization
+	"""
+	def __getitem__(self, key):
+		self.lock.acquire()
+		o = object.__getitem__(self, key)
+		self.lock.release()
+		return o

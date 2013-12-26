@@ -24,3 +24,7 @@ class PygameModel(Model):
 	"""
 	def tick(self, t):
 		return self.clock.tick(t)
+
+	def step(self):
+		print(self.getFirst("Region").isSurrounding(self.getChildren()[1]))
+		self.getFirst("Region").pos = (50, 50)

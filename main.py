@@ -18,6 +18,7 @@ def printChildren(obj, depth = 1):
 	for o in obj.getChildren():
 		printChildren(o, depth + 1)
 
-w = PygameModel(fps = 60)
-PygameView(parent = w)
+w = PygameModel(fps = 1)
+Region(parent = w, size = (4, 4))
+m = Region(parent = w, size = (1, 1))
 w.start()
