@@ -1,73 +1,157 @@
 
-import threading
+import collections
+
+## Exception definitions ##
+class ParentError(Exception):
+	def __init__(self, message):
+		Exception.__init__(self, message)
 
 """
-" Base class for all objects that will interact with the Workspace
+" Defines a dictionary object that can hold more than one object per key
+"""
+class NamedDictionary(collections.MutableMapping):
+	"""
+	" CONSTRUCTOR
+	"""
+	def __init__(self):
+		self.children = dict()
+
+	"""
+	" Gets the requested set of children
+	" @param string key: Name of children to look for
+	" @return: Table of children with the requested name. Returns None 
+	" 		if there are no children with that name
+	"""
+	def __getitem__(self, key):
+		try:
+			return self.children[key]
+		except KeyError:
+			return None
+
+	"""
+	" Adds a child to the dictionary
+	" @param string key: Name of child that is being added
+	" @param BaseObj value: Reference to the object that is being added
+	"""
+	def __setitem__(self, key, value):
+		try:
+			self.children[key].append(value)
+		except KeyError:
+			self.children[key] = [value]
+
+	"""
+	" Removes a specific child from this dictionary
+	" @param BaseObj key: Reference to the object to remove.
+	"		Note that the expected type is a BaseObj, not a string.
+	" @remarks: Throws KeyError if key does not belong to this dictionary
+	"""
+	def __delitem__(self, key):
+		name = key.Name
+		i = 0 # Holds the index of the object that will be deleted
+		for o in self.children[name]: # Loop through the list of children belonging to this dictionary that have the given name
+			if o == key: # Delete the requested object from the children list
+				del self.children[name][i]
+			else:
+				i += 1
+
+	def __iter__(self):
+		return iter(self.children)
+
+	def __len__(self):
+		return len(self.children)
+
+"""
+" Base class for all objects that can be placed in the scene graph
 """
 class BaseObj(object):
 	"""
 	" CONSTRUCTOR
-	" @param string name: Name for this object
-	" @param Workspace parent: Reference to the workspace this object should be parented to
+	" @param BaseObj parent: Object to which the new object should be parented.
+	" 		Expected to be either a BaseObj, subclass of BaseObj, or None
+	" @param string Name: Name for this object.
 	"""
-	def __init__(self, Name = "object", parent = None):
+	def __init__(self, parent = None, Name = "Object"):
+		self.children = NamedDictionary() # Set of children that belong to this object
 		self.Name = Name
-		self.parent = None
-		self.setParent(parent)
-		self.lock = threading.Semaphore()
-		self.callbacks = {} # Contains all registered callbacks.  Key: Event type; Value: List of callbacks
-		self.events = {} # Contains all fired events. Key: Event type; Value: List of callbacks
+		object.__setattr__(self, "parent", None)
+		self.setParent(parent = parent)
 
 	"""
-	" Sets the parent workspace for this object
-	" @param Workspace target: Reference to the workspace to which this object should be parented
+	" Changes the parent of this object
+	" @param BaseObj parent: Object to which this object should be parented.
+	" 		Expected to be either a BaseObj, subclass of BaseObj, or None
 	"""
-	def setParent(self, target):
-		if self.parent == target:
-			return
-		elif target != None:
-			target.addChild(self)
-		self.parent = target
+	def setParent(self, parent = None):
+		## Ensure that this object is not being parented to itself ##
+		if self == parent:
+			raise ParentError("Can't set parent to self")
+
+		## Remove this object from its original parent ##
+		if self.parent != None:
+			self.parent.__delChild__(self)
+
+		## Add this object to the new parent ##
+		if parent != None:
+			parent.__addChild__(self)
+		object.__setattr__(self, "parent", parent)
 
 	"""
-	" Get all the events for this object that have been fired
-	" @param number dt: Number of milliseconds since the last frame
+	" Adds a child to this object
+	" @param BaseObj child: Reference to the object to add
 	"""
-	def collectEvents(self, dt):
-		pass
+	def __addChild__(self, child):
+		self.children[child.Name] = child
 
 	"""
-	" Add a callback to an event
-	" @param EVENT event: Type of event
-	" @param callable cb: Function to call when event fires
+	" Removes a given child from this object
+	" @param BaseObj child: Reference to the object to remove
+	" @remarks: Throws KeyError if child is not parented to ths object
 	"""
-	def registerCallback(self, event, cb):
-		## Check if a list of callbacks for this event already exists##
+	def __delChild__(self, child):
+		del self.children[child]
+
+	"""
+	" Gets the first child with the given name
+	" @param string Name: Name of the object to look for
+	" @return: Reference to the first object with the given name.
+	"		If no children with that name exist, returns None
+	"""
+	def getFirst(self, Name):
 		try:
-			self.callbacks[event].append(cb)
+			return self.children[Name][0]
 		except KeyError:
-			self.callbacks[event] = [cb]
+			return None
 
 	"""
-	" Runs the callbacks for all fired events
+	" Get every child that has the given name
+	" @param string Name: Name of objects to collect. If None, all
+	" 		children will be collapsed into a single list and returned.
+	" 		In other words, set Name to None to get all children
+	" @return: List of child objects that have the requested name.
+	"		If no children exist with the given name, returns None
 	"""
-	def fireEvents(self):
-		pass
+	def getChildren(self, Name = None):
+		## non-specific name ##
+		if Name == None:
+			l = []
+			for nameSet in self.children.values(): # Loop through all keys
+				for o in nameSet: # loop through all children with the given name
+					l.append(o)
+
+			return l
+
+		## Specific name ##
+		try:
+			return self.children[Name]
+		except KeyError:
+			return None
 
 	"""
-	" Extends the dot operator so that the Semaphore for this object will be
-	" automatically acquired.
+	" Allow setParent to be called by directly setting the parent attribute
 	"""
-	def __getitem__(self, key):
-		self.lock.acquire()
-		o = object.__getitem__(self, key)
-		self.lock.release()
-		return o
+	def __setattr__(self, key, value):
+		if key != "parent":
+			object.__setattr__(self, key, value)
+			return
 
-	"""
-	" Automatically acquires the Semaphore for this object
-	"""
-	def __setitem__(self, key, value):
-		self.lock.acquire()
-		object.__setitem__(self, key, value)
-		self.lock.release()
+		self.setParent(value)
