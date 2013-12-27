@@ -62,7 +62,7 @@ class Model(BaseObj, Drawable, threading.Thread):
 
 			## Step the simulation ##
 			self.preStep()
-			self.__step__()
+			self.__step__(self.dt)
 			self.postStep()
 
 			self.__draw__()

@@ -163,17 +163,19 @@ class BaseObj(object):
 
 	"""
 	" Actions for this object to perform during the modeling stage
+	" @param number dt: Amount of time since last frame
 	"""
-	def step(self):
+	def step(self, dt):
 		pass
 
 	"""
 	" Allows this object and all its children to generate their next step
+	" @param number dt: Amount of time since last frame
 	"""
-	def __step__(self):
-		self.step()
+	def __step__(self, dt):
+		self.step(dt)
 		for o in self.getChildren():
-			o.__step__()
+			o.__step__(dt)
 
 	"""
 	" Allow automatic thread synchronization

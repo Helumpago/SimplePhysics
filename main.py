@@ -22,10 +22,8 @@ def printChildren(obj, depth = 1):
 
 w = PygameModel(fps = 60)
 
-v = PygameView(parent = w)
-c = PygameCircle(parent = v, pos = (100, 100), radius = 5, color = (255, 255, 255))
-
-printChildren(w)
-print(c.pos.getAValue())
+v = PygameView(parent = w, scale = 1)
+c = PygameCircle(parent = v, pos = (0, 0), radius = 50, color = (50, 255, 40))
+PygameCircle(parent = c, pos = (100, 100), radius = 5, color = (50, 50, 250))
 
 w.start()
