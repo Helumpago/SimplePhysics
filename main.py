@@ -22,8 +22,12 @@ def printChildren(obj, depth = 1):
 
 w = PygameModel(fps = 60)
 
-v = PygameView(parent = w, scale = 1)
-c = PygameCircle(parent = v, pos = (0, 0), radius = 50, color = (50, 255, 40))
-PygameCircle(parent = c, pos = (100, 100), radius = 5, color = (50, 50, 250))
+v = PygameView(parent = w, scale = 4)
+c = PygameCircle(parent = v, Name = "Main", pos = (50, 50), radius = 50, scale = 1, color = (50, 255, 40))
+PygameCircle(parent = c, pos = (0, 0), radius = 25, scale = 1, color = (50, 50, 250))
 
 w.start()
+
+while True:
+	v.scale.setValue(v.scale.getValue() / 1.01)
+	time.sleep(0.01)

@@ -33,7 +33,7 @@ class Value(BaseObj):
 	" Queries necessary state info from ancestors
 	"""
 	def getAValue(self):
-		v = self.getValue()
+		v = self.initValue()
 		## Walk up the parent tree, watching for parents that have a value with the same name ##
 		cur = self.parent
 		while cur != None:
@@ -50,6 +50,15 @@ class Value(BaseObj):
 	"""
 	def combine(self, v1, v2):
 		raise NotImplementedError("combine() method left unimplemented")
+
+	"""
+	" Decides whether the value that belongs to this object should be included when
+	" 		calculating the absolute value
+	" @return: Value that represents the first value that should be used when walking
+	" 		up the parent tree.
+	"""
+	def initValue(self):
+		raise NotImplementedError("initValue() method left unimplemented")
 
 """
 " Number value that can be placed in the scene graph
@@ -73,6 +82,15 @@ class Number(Value):
 	def combine(self, v1, v2):
 		return v1 + v2
 
+	"""
+	" Decides whether the value that belongs to this object should be included when
+	" 		calculating the absolute value
+	" @return: Value that represents the first value that should be used when walking
+	" 		up the parent tree.
+	"""
+	def initValue(self):
+		return 0
+
 """
 " Same as a Number, except values are combined using multiplication instead of addition
 """
@@ -93,6 +111,15 @@ class Ratio(Number):
 	"""
 	def combine(self, v1, v2):
 		return v1 * v2
+
+	"""
+	" Decides whether the value that belongs to this object should be included when
+	" 		calculating the absolute value
+	" @return: Value that represents the first value that should be used when walking
+	" 		up the parent tree.
+	"""
+	def initValue(self):
+		return 1
 
 """
 " Tuple representing a 2D vector
@@ -115,3 +142,12 @@ class Vector2d(Value):
 	"""
 	def combine(self, v1, v2):
 		return (v1[0] + v2[0], v1[1] + v2[0])
+
+	"""
+	" Decides whether the value that belongs to this object should be included when
+	" 		calculating the absolute value
+	" @return: Value that represents the first value that should be used when walking
+	" 		up the parent tree.
+	"""
+	def initValue(self):
+		return (0, 0)

@@ -41,14 +41,17 @@ class PygameCircle(CircleRegion, Drawable):
 			raise TypeError("PygameCircle objects can only draw to PygameView objects")
 
 		pos = self.pos.getAValue()
-		pos = (round(pos[0]), round(pos[1]))
 		scale = self.scale.getAValue()
+		pos = (round(pos[0] * scale), round(pos[1] * scale))
 		pygame.draw.circle(view.window, self.color, pos, round(self.radius.getValue() * scale), 0)
 
 	"""
 	" Used for testing.  Just moves the shape at a pre set velocity
 	"""
-	def step(self, dt):
-		dx = self.pos.getValue()[0] + 3 * dt/1000
-		dy = self.pos.getValue()[1] + 3 * dt/1000
-		self.pos.setValue((dx, dy))
+	# def step(self, dt):
+	# 	if self.Name != "Main":
+	# 		return
+
+	# 	dx = self.pos.getValue()[0] + 30 * dt/1000
+	# 	dy = self.pos.getValue()[1] + 30 * dt/1000
+	# 	self.pos.setValue((dx, dy))
