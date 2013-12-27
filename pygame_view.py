@@ -2,6 +2,7 @@
 import pygame
 from pygame.locals import *
 from view import View
+from drawable import Drawable
 
 """
 " Creates a window using Pygame in which to render objects
@@ -28,10 +29,27 @@ class PygameView(View):
 		if(self.window != None):
 			return
 		pygame.init()
-		self.window = pygame.display.set_mode((self.getSize()[0], self.getSize()[1]), 0, 32)
+		self.window = pygame.display.set_mode((self.size.getValue()[0], self.size.getValue()[1]), 0, 32)
 
 	"""
 	" Check if the pygame window needs to be opened
 	"""
-	def draw(self):
+	def draw(self, view = None):
 		self.initWindow()
+
+	"""
+	" Adds this object as the window to which things should be drawn, then allows
+	" 		all children to draw themselves
+	" @param View view: Reference to the object that will be doing the drawing
+	"""
+	def __draw__(self, view = None):
+		self.draw(self)
+		self.window.lock()
+		self.window.fill((0, 0, 0))
+
+		for o in self.getChildren():
+			if isinstance(o, Drawable):
+				o.__draw__(self)
+
+		self.window.unlock()
+		pygame.display.update()

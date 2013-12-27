@@ -122,7 +122,7 @@ class BaseObj(object):
 	def getFirst(self, Name):
 		try:
 			return self.children[Name][0]
-		except KeyError:
+		except (KeyError, TypeError):
 			return None
 
 	"""

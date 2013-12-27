@@ -38,7 +38,6 @@ class Value(BaseObj):
 		cur = self.parent
 		while cur != None:
 			if cur.getFirst(self.Name) != None:
-				print("Found a similar value in %s" % cur.Name)
 				v = self.combine(v, cur.getFirst(self.Name).getValue())
 			cur = cur.parent
 
