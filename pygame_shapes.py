@@ -46,6 +46,3 @@ class PygameCircle(CircleRegion, Drawable, Physical):
 		scale = self.scale.getAValue()
 		pos = (round(pos[0] * scale), round(pos[1] * scale))
 		pygame.draw.circle(view.window, self.color, pos, round(self.radius.getValue() * scale), 0)
-
-	def step(self, dt):
-		self.pos.setValue((self.pos.getValue()[0] + 5 * dt/1000, self.pos.getValue()[1] + 5 * dt/1000))

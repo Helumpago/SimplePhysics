@@ -59,7 +59,7 @@ class PygameView(View):
 	"""
 	" Closes the pygame window created by this view
 	"""
-	def close(self):
+	def close(self, event):
 		if self.window != None:
 			pygame.quit()
 			self.view = None

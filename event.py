@@ -17,8 +17,12 @@ class Callback(BaseObj):
 		BaseObj.__init__(self, parent = parent, Name = Name)
 		self.cb = cb 
 
-	def __call__(self):
-		self.cb()
+	"""
+	" Runs the given callback
+	" @param parent: Reference to the event that this callback belongs to
+	"""
+	def __call__(self, parent):
+		self.cb(parent)
 
 """
 " Container for multiple callbacks.  Provides methods that will decide
@@ -51,10 +55,16 @@ class Event(BaseObj):
 		if self.fire != True:
 			return
 
+		self.forceRun()
+
+	"""
+	" Runs all registered callbacks, regardless of whether the condition was met
+	"""
+	def forceRun(self):
 		## Loop through and run all callbacks that directly descend from this object ##
 		for cb in self.getChildren():
 			if hasattr(cb, '__call__'): # Ensure that this object is callable
-				cb()
+				cb(self)
 
 		self.fire = False
 

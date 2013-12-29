@@ -20,16 +20,18 @@ def printChildren(obj, depth = 1):
 	for o in obj.getChildren():
 		printChildren(o, depth + 1)
 
-def quit():
-	print("Quitting")
+def velocity(event):
+	posRef = event.owner.pos
+	posRef.setValue((posRef.getValue()[0] + 50 * event.dt/1000, posRef.getValue()[1] + 5 * event.dt/1000))
 
-w = PygameModel(fps = 60)
+w = PygameModel(fps = 6)
 
 v = PygameView(parent = w, scale = 1, size = (1000, 500))
 c = PygameCircle(parent = v, Name = "Main", pos = (0, 0), radius = 50, scale = 1, color = (50, 255, 40))
 c2 = PygameCircle(parent = c, pos = (0, 0), radius = 25, scale = 1, color = (50, 50, 250))
 PygameCircle(parent = c2, pos = (0, 0), radius = 5, scale = 1, color = (0, 250, 0))
 
+c.onStep.regcb(velocity)
 w.events.getFirst("QUIT").regcb(v.close)
 w.events.getFirst("QUIT").regcb(w.close)
 w.start()

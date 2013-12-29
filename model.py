@@ -20,6 +20,8 @@ class Model(BaseObj, Drawable, Physical, threading.Thread):
 	def __init__(self, Name = "Model", fps = 60):
 		BaseObj.__init__(self, parent = None, Name = Name)
 		Drawable.__init__(self)
+		Physical.__init__(self)
+		self.onStep.regcb(self.step)
 		threading.Thread.__init__(self)
 		self.fps = fps
 		self.events = BaseObj(parent = self, Name = "Events") # Container for all events that this object can trigger
@@ -47,7 +49,7 @@ class Model(BaseObj, Drawable, Physical, threading.Thread):
 	"""
 	" Calculate this object's next frame.
 	"""
-	def step(self, dt):
+	def step(self, event):
 		for ev in self.events.getChildren():
 			ev.run()
 
@@ -67,5 +69,5 @@ class Model(BaseObj, Drawable, Physical, threading.Thread):
 	"""
 	" Closes the simulation thread
 	"""
-	def close(self):
+	def close(self, event):
 		exit()
