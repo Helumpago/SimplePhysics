@@ -3,6 +3,7 @@ import threading
 from base_obj import BaseObj, ParentError
 from drawable import Drawable
 from event import Event
+from physical import Physical
 
 """
 " Controls the flow of the simulation. In other words,
@@ -10,7 +11,7 @@ from event import Event
 " This object is the root of the scene graph for all
 " 	simulations
 """
-class Model(BaseObj, Drawable, threading.Thread):
+class Model(BaseObj, Drawable, Physical, threading.Thread):
 	"""
 	" CONSTRUCTOR
 	" @param string Name: Name for this object.

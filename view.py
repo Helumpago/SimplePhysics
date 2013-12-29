@@ -1,11 +1,12 @@
 
 from region import RectRegion
 from drawable import Drawable
+from physical import Physical
 
 """
 " Interface that defines an object that is responsible for managing the window
 """
-class View(RectRegion, Drawable):
+class View(RectRegion, Drawable, Physical):
 	"""
 	" CONSTRUCTOR
 	" @param BaseObj parent: Object to which the new object should be parented.

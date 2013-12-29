@@ -162,22 +162,6 @@ class BaseObj(object):
 		self.lock.release()
 
 	"""
-	" Actions for this object to perform during the modeling stage
-	" @param number dt: Amount of time since last frame
-	"""
-	def step(self, dt):
-		pass
-
-	"""
-	" Allows this object and all its children to generate their next step
-	" @param number dt: Amount of time since last frame
-	"""
-	def __step__(self, dt):
-		self.step(dt)
-		for o in self.getChildren():
-			o.__step__(dt)
-
-	"""
 	" Allow automatic thread synchronization
 	"""
 	def __getitem__(self, key):
