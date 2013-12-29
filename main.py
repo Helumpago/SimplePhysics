@@ -30,12 +30,13 @@ c = PygameCircle(parent = v, Name = "Main", pos = (0, 0), radius = 50, scale = 1
 c2 = PygameCircle(parent = c, pos = (0, 0), radius = 25, scale = 1, color = (50, 50, 250))
 PygameCircle(parent = c2, pos = (0, 0), radius = 5, scale = 1, color = (0, 250, 0))
 
-w.events.getFirst("QUIT").regcb(quit)
+w.events.getFirst("QUIT").regcb(v.close)
+w.events.getFirst("QUIT").regcb(w.close)
 w.start()
 
-while True:
-	# pos = v.pos.getValue()
-	# pos = (pos[0] + 1, pos[1])
-	# v.pos.setValue(pos)
-	v.scale.setValue(v.scale.getValue() / 1.01)
-	time.sleep(0.01)
+# while True:
+# 	# pos = v.pos.getValue()
+# 	# pos = (pos[0] + 1, pos[1])
+# 	# v.pos.setValue(pos)
+# 	v.scale.setValue(v.scale.getValue() / 1.01)
+# 	time.sleep(0.01)

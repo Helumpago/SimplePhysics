@@ -62,3 +62,9 @@ class Model(BaseObj, Drawable, threading.Thread):
 			self.__draw__()
 			self.__collectEvents__()
 			self.__step__(self.dt)
+
+	"""
+	" Closes the simulation thread
+	"""
+	def close(self):
+		exit()
