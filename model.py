@@ -2,6 +2,7 @@
 import threading
 from base_obj import BaseObj, ParentError
 from drawable import Drawable
+from event import Event
 
 """
 " Controls the flow of the simulation. In other words,
@@ -20,6 +21,8 @@ class Model(BaseObj, Drawable, threading.Thread):
 		Drawable.__init__(self)
 		threading.Thread.__init__(self)
 		self.fps = fps
+		self.events = BaseObj(parent = self, Name = "Events") # Container for all events that this object can trigger
+		Event(parent = self.events, Name = "QUIT") # Fired when the Model thread is ready to shut down
 
 	"""
 	" Prevent this object from being parented to anything
@@ -31,18 +34,6 @@ class Model(BaseObj, Drawable, threading.Thread):
 			raise ParentError("Can't parent a Model to any object")
 
 	"""
-	" Actions to perform before every frame is generated
-	"""
-	def preStep(self):
-		pass
-
-	"""
-	" Actions to perform before after frame is generated
-	"""
-	def postStep(self):
-		pass
-
-	"""
 	" ABSTRACT
 	" Limits the number of frames per second to the given number
 	" 		and gets the number of miliseconds since the last frame.
@@ -50,7 +41,14 @@ class Model(BaseObj, Drawable, threading.Thread):
 	" @return: Number of miliseconds since the last frame
 	"""
 	def tick(self, t):
-		raise NotImplementedError("tick() method left unimplemented")
+		raise NotImplementedError("Model's tick() method left unimplemented")
+
+	"""
+	" Calculate this object's next frame.
+	"""
+	def step(self, dt):
+		for ev in self.events.getChildren():
+			ev.run()
 
 	"""
 	" Main execution loop for the simulation.  Separates itself
@@ -61,8 +59,6 @@ class Model(BaseObj, Drawable, threading.Thread):
 			self.dt = self.tick(self.fps)
 
 			## Step the simulation ##
-			self.preStep()
-			self.__step__(self.dt)
-			self.postStep()
-
 			self.__draw__()
+			self.__collectEvents__()
+			self.__step__(self.dt)

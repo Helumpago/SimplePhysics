@@ -132,7 +132,7 @@ class Vector2d(Value):
 	" @param string Name: Name for this object.
 	" @param number value: Starting value for this object
 	"""
-	def __init__(self, parent = None, Name = "Number", value = 0):
+	def __init__(self, parent = None, Name = "Vector2d", value = (0, 0)):
 		Value.__init__(self, parent = parent, Name = Name)
 		self.__value__ = value # Container for the actual value owned by this object
 
@@ -141,7 +141,7 @@ class Vector2d(Value):
 	" Used when this value walks up its parent tree to combine similar values
 	"""
 	def combine(self, v1, v2):
-		return (v1[0] + v2[0], v1[1] + v2[0])
+		return (v1[0] + v2[0], v1[1] + v2[1])
 
 	"""
 	" Decides whether the value that belongs to this object should be included when

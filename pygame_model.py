@@ -20,7 +20,16 @@ class PygameModel(Model):
 	" Limits the number of frames per second to the given number
 	" 		and gets the number of miliseconds since the last frame.
 	" @param number t: Maximum FPS
-	" @return: Number of miliseconds since the last frame
+	" @return: Number of milliseconds since the last frame
 	"""
 	def tick(self, t):
 		return self.clock.tick(t)
+
+	"""
+	" Decide which events should be run
+	"""
+	def collectEvents(self):
+		## Check pygame events ##
+		for pyevent in pygame.event.get():
+			if pyevent.type == QUIT:
+				self.events.getFirst("QUIT").fire = True

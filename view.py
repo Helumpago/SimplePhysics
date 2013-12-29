@@ -18,3 +18,9 @@ class View(RectRegion, Drawable):
 	def __init__(self, parent = None, Name = "View", size = (256, 256), pos = (0, 0), scale = 1):
 		RectRegion.__init__(self, parent = parent, Name = Name, size = size, pos = pos, scale = scale)
 		Drawable.__init__(self)
+
+	"""
+	" Closes this view
+	"""
+	def close(self):
+		raise NotImplementedError("View's close() method left unimplemented")

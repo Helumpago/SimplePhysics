@@ -185,3 +185,17 @@ class BaseObj(object):
 		o = object.__getitem__(self, key)
 		self.lock.release()
 		return o
+
+	"""
+	" Decide which events should be fired
+	"""
+	def collectEvents(self):
+		pass
+
+	"""
+	" Allow this object and its descendents to check whether they should run their events
+	"""
+	def __collectEvents__(self):
+		self.collectEvents()
+		for o in self.getChildren():
+			o.__collectEvents__()
