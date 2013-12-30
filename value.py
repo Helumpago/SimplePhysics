@@ -1,4 +1,5 @@
 
+from event import Event
 from base_obj import BaseObj
 
 """
@@ -14,6 +15,7 @@ class Value(BaseObj):
 	def __init__(self, parent = None, Name = "Value"):
 		BaseObj.__init__(self, parent = parent, Name = Name)
 		self.__value__ = None # Container for the actual value owned by this object
+		Event(parent = self.events, Name = "onChange")
 
 	"""
 	" Get the exact value owned by this object.
@@ -26,6 +28,7 @@ class Value(BaseObj):
 	" Set the value owned by this object
 	"""
 	def setValue(self, v):
+		self.events.getFirst("onChange").fire = True
 		self.__value__ = v
 
 	"""
