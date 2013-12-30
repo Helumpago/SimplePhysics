@@ -12,12 +12,10 @@ from pygame_view import PygameView
 from region import Region
 from value import Number, Vector2d
 from pygame_shapes import PygameCircle, PygameLine
-from physical import Physical
 
-class Ball(PygameCircle, Physical):
+class Ball(PygameCircle):
 	def __init__(self, parent = None, Name = "Circle", radius = 1, pos = (0, 0), scale = 1, color = (0, 0, 0), velocity = (0, 0)):
 		PygameCircle.__init__(self, parent = parent, Name = Name, radius = radius, pos = pos, scale = scale, color = color)
-		Physical.__init__(self)
 		self.color = color
 		self.velocity = velocity
 		self.timer = 0

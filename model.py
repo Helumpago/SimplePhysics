@@ -1,9 +1,9 @@
 
 import threading
-from base_obj import BaseObj, ParentError
+from base_obj import BaseObj
 from drawable import Drawable
 from event import Event
-from physical import Physical
+from eventless_object import ParentError
 
 """
 " Controls the flow of the simulation. In other words,
@@ -11,7 +11,7 @@ from physical import Physical
 " This object is the root of the scene graph for all
 " 	simulations
 """
-class Model(BaseObj, Drawable, Physical, threading.Thread):
+class Model(BaseObj, Drawable, threading.Thread):
 	"""
 	" CONSTRUCTOR
 	" @param string Name: Name for this object.
@@ -20,7 +20,6 @@ class Model(BaseObj, Drawable, Physical, threading.Thread):
 	def __init__(self, Name = "Model", fps = 60):
 		BaseObj.__init__(self, parent = None, Name = Name)
 		Drawable.__init__(self)
-		Physical.__init__(self)
 		threading.Thread.__init__(self)
 		self.fps = fps
 		Event(parent = self.events, Name = "onQuit") # Fired when the Model thread is ready to shut down

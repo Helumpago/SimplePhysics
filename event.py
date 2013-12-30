@@ -1,11 +1,11 @@
 
-from base_obj import BaseObj
+from eventless_object import EventlessObject
 
 """
 " An object that holds a method and can be placed in the scene graph.
 " Used to hold the actions for events.
 """
-class Callback(BaseObj):
+class Callback(EventlessObject):
 	"""
 	" CONSTRUCTOR
 	" @param callable cb: Callback to run when this object is called
@@ -14,7 +14,7 @@ class Callback(BaseObj):
 	" @param string Name: Name for this object.
 	"""
 	def __init__(self, cb, parent = None, Name = "Callback"):
-		BaseObj.__init__(self, parent = parent, Name = Name)
+		EventlessObject.__init__(self, parent = parent, Name = Name)
 		self.cb = cb 
 
 	"""
@@ -28,7 +28,7 @@ class Callback(BaseObj):
 " Container for multiple callbacks.  Provides methods that will decide
 " 		whether the descending callbacks should be run.
 """
-class Event(BaseObj):
+class Event(EventlessObject):
 	"""
 	" CONSTRUCTOR
 	" @param BaseObj parent: Object to which the new object should be parented.
@@ -36,7 +36,7 @@ class Event(BaseObj):
 	" @param string Name: Name for this object.
 	"""
 	def __init__(self, parent = None, Name = "Event"):
-		BaseObj.__init__(self, parent = parent, Name = Name)
+		EventlessObject.__init__(self, parent = parent, Name = Name)
 		self.fire = False #Flag indicating whether this object can fire its callbacks
 
 	"""

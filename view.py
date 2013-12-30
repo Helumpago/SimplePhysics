@@ -1,12 +1,11 @@
 
 from region import RectRegion
 from drawable import Drawable
-from physical import Physical
 
 """
 " Interface that defines an object that is responsible for managing the window
 """
-class View(RectRegion, Drawable, Physical):
+class View(RectRegion, Drawable):
 	"""
 	" CONSTRUCTOR
 	" @param BaseObj parent: Object to which the new object should be parented.
@@ -19,7 +18,6 @@ class View(RectRegion, Drawable, Physical):
 	def __init__(self, parent = None, Name = "View", size = (256, 256), pos = (0, 0), scale = 1):
 		RectRegion.__init__(self, parent = parent, Name = Name, size = size, pos = pos, scale = scale)
 		Drawable.__init__(self)
-		Physical.__init__(self)
 
 	"""
 	" Closes this view
