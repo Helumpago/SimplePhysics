@@ -183,3 +183,16 @@ class BaseObj(object):
 		self.collectEvents()
 		for o in self.getChildren():
 			o.__collectEvents__()
+
+	"""
+	" Prints the name of this object and all its children.
+	" @param int depth: Number of tabs to place before he first line.
+	" 		Recommended to leave this blank.
+	"""
+	def printChildren(self, depth = 1):
+		for _ in range(1, depth):
+			print('\t', end = "")
+
+		print("%s" % self.Name)
+		for o in self.getChildren():
+			o.printChildren(depth + 1)

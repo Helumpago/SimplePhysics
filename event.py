@@ -40,7 +40,7 @@ class Event(BaseObj):
 		self.fire = False #Flag indicating whether this object can fire its callbacks
 
 	"""
-	" Methods that decides whether the attached callbacks should be run.
+	" Method that decides whether the attached callbacks should be run.
 	" Note, does not actually fire the callbacks. Only sets 
 	" 		self.fire to True so that they can be run.  To actually
 	" 		run the callbacks, call run()
