@@ -8,12 +8,11 @@ from pygame.locals import *
 from drawable import Drawable
 from region import RectRegion, CircleRegion
 from pygame_view import PygameView
-from physical import Physical
 
 """
 " Allows the CircleRegion class to draw itself
 """
-class PygameCircle(CircleRegion, Drawable, Physical):
+class PygameCircle(CircleRegion, Drawable):
 	"""
 	" CONSTRUCTOR
 	" @param BaseObj parent: Object to which the new object should be parented.
@@ -28,7 +27,6 @@ class PygameCircle(CircleRegion, Drawable, Physical):
 	def __init__(self, parent = None, Name = "Circle", radius = 1, pos = (0, 0), scale = 1, color = (0, 0, 0)):
 		CircleRegion.__init__(self, parent = parent, Name = Name, radius = radius, pos = pos, scale = scale)
 		Drawable.__init__(self)
-		Physical.__init__(self)
 		self.color = color
 
 	"""
