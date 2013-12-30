@@ -20,7 +20,7 @@ class PygameView(View):
 	def __init__(self, parent = None, Name = "PygameView", size = (256, 256), pos = (0, 0), scale = 1):
 		View.__init__(self, parent = parent, Name = Name, size = size, pos = pos, scale = scale)
 		## Adjust camera position so that it is focused at the center of the view ##
-		self.pos.setValue((self.pos.getValue()[0] + self.size.getValue()[0]/2, self.pos.getValue()[1] + self.size.getValue()[1]/2))
+		self.pos.setValue(((self.pos.getValue()[0] + self.size.getValue()[0]/2) / self.scale.getValue(), (self.pos.getValue()[1] + self.size.getValue()[1]/2) / self.scale.getValue()))
 		self.window = None # Reference to the Pygame window
 
 	"""

@@ -36,14 +36,19 @@ def gravity(event):
 	vel = event.owner.velocity
 	event.owner.velocity = (vel[0], vel[1] + 9.81 * event.dt/1000)
 
+def zoom(event):
+	scale = event.owner.scale.getValue()
+	event.owner.scale.setValue(scale + event.dt/10000)
+
 w = PygameModel(fps = 60)
-v = PygameView(parent = w, scale = 1.5, size = (1000, 500))
+v = PygameView(parent = w, scale = 10, size = (1000, 500))
 c = Ball(parent = v, Name = "Main", pos = (0, 0), radius = 10, color = (0, 255, 0), velocity = (-25, -65))
 Ball(parent = c, color = (0, 0, 255), radius = 5, Name = "Center")
-PygameLine(parent = v, color = (255, 255, 255), pos = (0, 0), size = (60, 40))
+PygameLine(parent = v, color = (255, 255, 255), pos = (0, 0), size = (7.071, 7.071))
 
-c.onStep.regcb(setPos)
-c.onStep.regcb(gravity)
+# c.onStep.regcb(setPos)
+# c.onStep.regcb(gravity)
+# v.onStep.regcb(zoom)
 
 w.events.getFirst("QUIT").regcb(v.close)
 w.start()
