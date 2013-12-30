@@ -4,6 +4,7 @@
 """
 
 import time
+import random
 from pygame_model import PygameModel
 from base_obj import BaseObj
 from drawable import Drawable
@@ -40,6 +41,10 @@ def zoom(event):
 	scale = event.owner.scale.getValue()
 	event.owner.scale.setValue(scale + event.dt/10000)
 
+def changeColor(event):
+	if event.owner.timer > 1000:
+		event.owner.color = (random.randrange(255), random.randrange(255), random.randrange(255))
+
 w = PygameModel(fps = 60)
 v = PygameView(parent = w, scale = 1, size = (1000, 500))
 c = Ball(parent = v, Name = "Main", pos = (0, 0), radius = 10, color = (0, 255, 0), velocity = (-25, -65))
@@ -48,7 +53,8 @@ PygameLine(parent = v, color = (255, 255, 255), pos = (0, 0), size = (7.071, 7.0
 
 c.events.getFirst("onStep").regcb(setPos)
 c.events.getFirst("onStep").regcb(gravity)
+c.events.getFirst("onDraw").regcb(changeColor)
 # v.onStep.regcb(zoom)
 
-w.events.getFirst("QUIT").regcb(v.close)
+w.events.getFirst("onQuit").regcb(v.close)
 w.start()

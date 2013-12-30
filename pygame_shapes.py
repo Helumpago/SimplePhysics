@@ -8,6 +8,7 @@ from pygame.locals import *
 from drawable import Drawable
 from region import RectRegion, CircleRegion
 from pygame_view import PygameView
+from event import Event
 
 """
 " Allows the CircleRegion class to draw itself
@@ -28,11 +29,13 @@ class PygameCircle(CircleRegion, Drawable):
 		CircleRegion.__init__(self, parent = parent, Name = Name, radius = radius, pos = pos, scale = scale)
 		Drawable.__init__(self)
 		self.color = color
+		self.events.getFirst("onDraw").regcb(self.draw).Name = "AutoDraw"
 
 	"""
 	" What this object should do during the render stage
 	"""
-	def draw(self, view = None):
+	def draw(self, event):
+		view = event.view
 		## If this shape doesn't have a View object as an ancestor, don't do anything ##
 		if view == None:
 			return
@@ -63,8 +66,10 @@ class PygameLine(RectRegion, Drawable):
 		RectRegion.__init__(self, parent = parent, Name = Name, size = size, pos = pos, scale = scale)
 		Drawable.__init__(self)
 		self.color = color
+		self.events.getFirst("onDraw").regcb(self.draw).Name = "AutoDraw"
 
-	def draw(self, view = None):
+	def draw(self, event):
+		view = event.view
 		## If this shape doesn't have a View object as an ancestor, don't do anything ##
 		if view == None:
 			return

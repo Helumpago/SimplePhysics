@@ -22,6 +22,7 @@ class PygameView(View):
 		## Adjust camera position so that it is focused at the center of the view ##
 		self.pos.setValue(((self.pos.getValue()[0] + self.size.getValue()[0]/2) / self.scale.getValue(), (self.pos.getValue()[1] + self.size.getValue()[1]/2) / self.scale.getValue()))
 		self.window = None # Reference to the Pygame window
+		self.events.getFirst("onDraw").regcb(self.draw).Name = "InitWindow"
 
 	"""
 	" If a pygame window has not already been created, open one
@@ -36,7 +37,7 @@ class PygameView(View):
 	"""
 	" Check if the pygame window needs to be opened
 	"""
-	def draw(self, view = None):
+	def draw(self, event):
 		self.initWindow()
 
 	"""
@@ -48,6 +49,8 @@ class PygameView(View):
 		self.draw(self)
 		self.window.lock()
 		self.window.fill((0, 0, 0))
+
+		self.events.getFirst("onDraw").forceRun()
 
 		for o in self.getChildren():
 			if isinstance(o, Drawable):

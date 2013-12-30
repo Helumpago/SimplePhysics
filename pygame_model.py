@@ -32,4 +32,4 @@ class PygameModel(Model):
 		## Check pygame events ##
 		for pyevent in pygame.event.get():
 			if pyevent.type == QUIT:
-				self.events.getFirst("QUIT").fire = True
+				self.events.getFirst("onQuit").fire = True

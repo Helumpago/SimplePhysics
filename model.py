@@ -23,8 +23,8 @@ class Model(BaseObj, Drawable, Physical, threading.Thread):
 		Physical.__init__(self)
 		threading.Thread.__init__(self)
 		self.fps = fps
-		Event(parent = self.events, Name = "QUIT") # Fired when the Model thread is ready to shut down
-		self.events.getFirst("QUIT").regcb(self.close).Name = "AutoClose"
+		Event(parent = self.events, Name = "onQuit") # Fired when the Model thread is ready to shut down
+		self.events.getFirst("onQuit").regcb(self.close).Name = "AutoClose"
 		self.events.getFirst("onStep").regcb(self.step).Name = "MainLoop"
 
 	"""
