@@ -24,7 +24,6 @@ class Model(BaseObj, Drawable, Physical, threading.Thread):
 		self.onStep.regcb(self.step)
 		threading.Thread.__init__(self)
 		self.fps = fps
-		self.events = BaseObj(Name = "Events") # Container for all events that this object can trigger
 		Event(parent = self.events, Name = "QUIT") # Fired when the Model thread is ready to shut down
 		self.events.getFirst("QUIT").regcb(self.close).Name = "AutoClose"
 

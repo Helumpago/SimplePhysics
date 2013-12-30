@@ -62,17 +62,17 @@ class NamedDictionary(collections.MutableMapping):
 		return len(self.children)
 
 """
-" Base class for all objects that can be placed in the scene graph
-" Defines an object that can do something during the model stage.
+" Defines an object that can be placed in the scene graph but can not hold 
+" 		any events
 """
-class BaseObj(object):
+class EventlessObject(object):
 	"""
 	" CONSTRUCTOR
 	" @param BaseObj parent: Object to which the new object should be parented.
 	" 		Expected to be either a BaseObj, subclass of BaseObj, or None
 	" @param string Name: Name for this object.
 	"""
-	def __init__(self, parent = None, Name = "Object"):
+	def __init__(self, parent = None, Name = "EventlessObject"):
 		object.__setattr__(self, "lock", threading.Semaphore())
 		self.children = NamedDictionary() # Set of children that belong to this object
 		self.Name = Name
@@ -196,3 +196,18 @@ class BaseObj(object):
 		print("%s" % self.Name)
 		for o in self.getChildren():
 			o.printChildren(depth + 1)
+
+"""
+" Base class for all objects that can be placed in the scene graph
+" 		and can act on events
+"""
+class BaseObj(EventlessObject):
+	"""
+	" CONSTRUCTOR
+	" @param BaseObj parent: Object to which the new object should be parented.
+	" 		Expected to be either a BaseObj, subclass of BaseObj, or None
+	" @param string Name: Name for this object.
+	"""
+	def __init__(self, parent = None, Name = "Object"):
+		EventlessObject.__init__(self, parent = parent, Name = Name)
+		self.events = EventlessObject(Name = "Events") # Container for all events this object can act on
