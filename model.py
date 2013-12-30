@@ -21,11 +21,11 @@ class Model(BaseObj, Drawable, Physical, threading.Thread):
 		BaseObj.__init__(self, parent = None, Name = Name)
 		Drawable.__init__(self)
 		Physical.__init__(self)
-		self.onStep.regcb(self.step)
 		threading.Thread.__init__(self)
 		self.fps = fps
 		Event(parent = self.events, Name = "QUIT") # Fired when the Model thread is ready to shut down
 		self.events.getFirst("QUIT").regcb(self.close).Name = "AutoClose"
+		self.events.getFirst("onStep").regcb(self.step).Name = "MainLoop"
 
 	"""
 	" Prevent this object from being parented to anything

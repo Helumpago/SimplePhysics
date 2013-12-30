@@ -46,8 +46,8 @@ c = Ball(parent = v, Name = "Main", pos = (0, 0), radius = 10, color = (0, 255, 
 Ball(parent = c, color = (0, 0, 255), radius = 5, Name = "Center")
 PygameLine(parent = v, color = (255, 255, 255), pos = (0, 0), size = (7.071, 7.071))
 
-c.onStep.regcb(setPos)
-c.onStep.regcb(gravity)
+c.events.getFirst("onStep").regcb(setPos)
+c.events.getFirst("onStep").regcb(gravity)
 # v.onStep.regcb(zoom)
 
 w.events.getFirst("QUIT").regcb(v.close)
