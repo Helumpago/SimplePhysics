@@ -39,7 +39,7 @@ class RectRegion(Region):
 	" @param (posX, posY) pos: Center of this region
 	" @param number scale: Scale to apply to all objects rendering themselves in this window
 	"""
-	def __init__(self, parent = None, Name = "Region", size = (float("inf"), float("inf")), pos = (0, 0), scale = 1):
+	def __init__(self, parent = None, Name = "RectRegion", size = (float("inf"), float("inf")), pos = (0, 0), scale = 1):
 		Region.__init__(self, parent = parent, Name = Name)
 		self.size = Vector2d(parent = self, Name = "size", value = size)
 		self.pos = Vector2d(parent = self, Name = "pos", value = pos)
@@ -75,7 +75,7 @@ class CircleRegion(Region):
 	" @param (posX, posY) pos: Center of this region
 	" @param number scale: Scale to apply to all objects rendering themselves in this window
 	"""
-	def __init__(self, parent = None, Name = "Region", radius = float("inf"), pos = (0, 0), scale = 1):
+	def __init__(self, parent = None, Name = "CircleRegion", radius = float("inf"), pos = (0, 0), scale = 1):
 		Region.__init__(self, parent = parent, Name = Name)
 		self.radius = Number(parent = self, Name = "radius", value = radius)
 		self.pos = Vector2d(parent = self, Name = "pos", value = pos)
