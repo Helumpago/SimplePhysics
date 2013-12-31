@@ -1,7 +1,7 @@
 
 import pygame
 from pygame.locals import *
-from model import Model
+from .model import Model
 
 """
 " Creates a Model that uses Pygame as its graphics library

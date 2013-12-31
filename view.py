@@ -1,6 +1,6 @@
 
-from region import RectRegion
-from drawable import Drawable
+from .region import RectRegion
+from .drawable import Drawable
 
 """
 " Interface that defines an object that is responsible for managing the window

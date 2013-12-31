@@ -1,5 +1,5 @@
 
-from event import Event
+from .event import Event
 
 """
 " Defines an object that can do stuff during the render cycle

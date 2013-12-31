@@ -5,10 +5,10 @@
 
 import pygame
 from pygame.locals import *
-from drawable import Drawable
-from region import RectRegion, CircleRegion
-from pygame_view import PygameView
-from event import Event
+from .drawable import Drawable
+from .region import RectRegion, CircleRegion
+from .pygame_view import PygameView
+from .event import Event
 
 """
 " Allows the CircleRegion class to draw itself
@@ -25,7 +25,7 @@ class PygameCircle(CircleRegion, Drawable):
 	" @param number scale: Scale to apply to all objects rendering themselves in this window
 	" @param (int R, int G, int B) color: RGB color for this shape
 	"""
-	def __init__(self, parent = None, Name = "Circle", radius = 1, pos = (0, 0), scale = 1, color = (0, 0, 0)):
+	def __init__(self, parent = None, Name = "Circle", radius = 1, pos = (0, 0), scale = 1, color = (255, 255, 255)):
 		CircleRegion.__init__(self, parent = parent, Name = Name, radius = radius, pos = pos, scale = scale)
 		Drawable.__init__(self)
 		self.color = color
@@ -62,7 +62,7 @@ class PygameLine(RectRegion, Drawable):
 	" @param (posX, posY) pos: Center of this region
 	" @param number scale: Scale to apply to all objects rendering themselves in this window
 	"""
-	def __init__(self, parent = None, Name = "Line", size = (0, 0), pos = (0, 0), scale = 1, color = (0, 0, 0)):
+	def __init__(self, parent = None, Name = "Line", size = (0, 0), pos = (0, 0), scale = 1, color = (255, 255, 255)):
 		RectRegion.__init__(self, parent = parent, Name = Name, size = size, pos = pos, scale = scale)
 		Drawable.__init__(self)
 		self.color = color

@@ -1,6 +1,6 @@
 
-from eventless_object import EventlessObject
-from event import Event
+from .eventless_object import EventlessObject
+from .event import Event
 
 """
 " Base class for all objects that can be placed in the scene graph

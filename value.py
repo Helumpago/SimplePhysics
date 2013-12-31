@@ -1,6 +1,6 @@
 
-from event import Event
-from base_obj import BaseObj
+from .event import Event
+from .base_obj import BaseObj
 
 """
 " Base class for all value types that can be placed in the scene graph

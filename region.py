@@ -1,6 +1,6 @@
 
-from base_obj import BaseObj
-from value import Number, Ratio, Vector2d
+from .base_obj import BaseObj
+from .value import Number, Ratio, Vector2d
 
 """
 " Base class for all regions

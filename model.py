@@ -1,9 +1,9 @@
 
 import threading
-from base_obj import BaseObj
-from drawable import Drawable
-from event import Event
-from eventless_object import ParentError
+from .base_obj import BaseObj
+from .drawable import Drawable
+from .event import Event
+from .eventless_object import ParentError
 
 """
 " Controls the flow of the simulation. In other words,

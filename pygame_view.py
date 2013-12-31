@@ -1,8 +1,8 @@
 
 import pygame
 from pygame.locals import *
-from view import View
-from drawable import Drawable
+from .view import View
+from .drawable import Drawable
 
 """
 " Creates a window using Pygame in which to render objects

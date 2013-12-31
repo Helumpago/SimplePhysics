@@ -1,5 +1,5 @@
 
-from eventless_object import EventlessObject
+from .eventless_object import EventlessObject
 
 """
 " An object that holds a method and can be placed in the scene graph.
