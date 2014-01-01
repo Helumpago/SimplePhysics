@@ -1,10 +1,11 @@
 
-from ..region import RectRegion
+from ..drawable import Drawable
+from .collidable import Collidable
 
 """
-" Defines a region that can participate in collisions.
+" Creates a circle that can collide with other objects.
 """
-class Collidable(RectRegion):
+class Ball(Collidable, Drawable):
 	"""
 	" CONSTRUCTOR
 	" @param BaseObj parent: Object to which the new object should be parented.
@@ -17,5 +18,4 @@ class Collidable(RectRegion):
 	" @param bool canCollide: Whether or not this object can participate in collisions
 	"""
 	def __init__(self, parent = None, Name = "Collidable", size = (float("inf"), float("inf")), pos = (0, 0), scale = 1, canCollide = True):
-		RectRegion.__init__(self, parent = parent, Name = Name, size = size, pos = pos, scale = scale)
-		self.canCollide = canCollide
+		RectRegion.__init__(self, parent = parent, Name = Name, size = size, pos = pos, scale = scale, canCollide = canCollide)

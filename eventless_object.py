@@ -75,7 +75,7 @@ class EventlessObject(object):
 	def __init__(self, parent = None, Name = "EventlessObject"):
 		object.__setattr__(self, "lock", threading.Semaphore())
 		self.children = NamedDictionary() # Set of children that belong to this object
-		self.Name = Name
+		object.__setattr__(self, "Name", Name)
 		object.__setattr__(self, "parent", None)
 		self.setParent(parent = parent)
 
@@ -97,6 +97,14 @@ class EventlessObject(object):
 		if parent != None:
 			parent.__addChild__(self)
 		object.__setattr__(self, "parent", parent)
+
+	"""
+	" Changes the name of this object
+	"""
+	def setName(self, Name):
+		self.parent.__delChild__(self)
+		object.__setattr__(self, "Name", Name)
+		self.parent.__addChild__(self)
 
 	"""
 	" Adds a child to this object
@@ -154,10 +162,12 @@ class EventlessObject(object):
 	"""
 	def __setattr__(self, key, value):
 		self.lock.acquire()
-		if key != "parent":
-			object.__setattr__(self, key, value)
-		else:
+		if key == "parent":
 			self.setParent(value)
+		elif key == "Name":
+			self.setName(value)
+		else:
+			object.__setattr__(self, key, value)
 
 		self.lock.release()
 

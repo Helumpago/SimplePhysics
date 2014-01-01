@@ -1,12 +1,30 @@
 
 from ..model import Model
-from .broad_phase import BroadPhase
+from .collidable import Collidable
 
 """
 " Defines a model that, in addition to the regular tasks of a model,
 " 		checks for collisions between objects
 """
-class CollisionModel(Model, BroadPhase):
+class CollisionModel(Model):
+	"""
+	" STATIC
+	" Recursively moves through a list of objects, checking for those that are collidable
+	" 		Includes all descendants of anything in the list
+	" @param [EventlessObject] collidables: List of objects to check.
+	" @return: List of all collidable objects (in no particular order)
+	"""
+	def collapseChildren(collidables):
+		l = [] # List of Collidables that descend from self.collidables
+		for o in collidables:
+			l += CollisionModel.collapseChildren(o.getChildren())
+
+			if isinstance(o, Collidable) != True:
+				continue
+			l.append(o)
+
+		return l
+
 	"""
 	" CONSTRUCTOR
 	" @param string Name: Name for this object.
@@ -17,7 +35,6 @@ class CollisionModel(Model, BroadPhase):
 	"""
 	def __init__(self, Name = "CollisionModel", fps = 60, collidables = []):
 		Model.__init__(self, Name = Name, fps = fps)
-		BroadPhase.__init__(collidables = collidables)
 
 	"""
 	" Algorithm that decides whether objects could possibly collide (broad phase collision detection)
