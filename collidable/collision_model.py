@@ -58,8 +58,15 @@ class CollisionModel(Model):
 	def narrowPhase(self):
 		for o in self.mayCollide:
 			for target in self.mayCollide[o]:
-				o.events.getFirst("onCollision").fire = o.confirmCollision(target)
-				# target.getFirst("onCollision").fire = target.confirmCollision(o)
+				if o.confirmCollision(target):
+					o.events.getFirst("onCollision").owner = o
+					o.events.getFirst("onCollision").hit = target
+					o.events.getFirst("onCollision").fire = True
+
+				if target.confirmCollision(o):
+					target.events.getFirst("onCollision").owner = target
+					target.events.getFirst("onCollision").hit = o
+					target.events.getFirst("onCollision").fire = True
 			 
 	"""
 	" Gets the list of objects that may be colliding with a given particle

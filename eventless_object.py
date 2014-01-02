@@ -36,7 +36,8 @@ class NamedDictionary(collections.MutableMapping):
 	"""
 	def __setitem__(self, key, value):
 		try:
-			self.children[key].append(value)
+			if value not in self.children[key]: # Do not allow multiple references to the same object
+				self.children[key].append(value)
 		except KeyError:
 			self.children[key] = [value]
 
@@ -105,6 +106,7 @@ class EventlessObject(object):
 		## Add this object to the new parent ##
 		if parent != None:
 			parent.__addChild__(self)
+
 		object.__setattr__(self, "parent", parent)
 
 	"""
