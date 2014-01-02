@@ -7,6 +7,21 @@ from .collidable import Collidable
 """
 class NaiveCollisionModel(CollisionModel):
 	"""
+	" Checks for intersection between two bounding boxes
+	" @param RectRegion box1, box2: Objects to check
+	" @return bool: True if the boxes intersect, false otherwise
+	"""
+	def intersects(box1, box2):
+		for signX in range(-1, 1, 2):
+			for signY in range(-1, 1, 2):
+				corner = (box2.pos.getAValue()[0] + signX * box2.size.getValue()[0]/2, box2.pos.getAValue()[1] + signY * box2.size.getValue()[1]/2)
+
+				if box1.isSurrounding(corner):
+					return True
+
+		return False
+
+	"""
 	" CONSTRUCTOR
 	" @param string Name: Name for this object.
 	" @param int fps: Maximum number of frames per second allowable.
@@ -20,12 +35,22 @@ class NaiveCollisionModel(CollisionModel):
 	"""
 	" Algorithm that decides whether objects could possibly collide (broad phase collision detection)
 	"""
-	def test(self):
-		pass
+	def broadPhase(self):
+		self.mayCollide.flush() # Flush old collision data
+		actors = CollisionModel.collapseChildren(self.collidables)
+
+		## Check all pairs of objects for collisions ##
+		for o1 in actors:
+			for o2 in actors:
+				if o1 == o2:
+					continue
+
+				if NaiveCollisionModel.intersects(o1, o2):
+					self.mayCollide[o1] = o2
 
 	"""
 	" Gets the list of objects that may be colliding with a given particle
 	" @param Collidable particle: Reference to the object that should be checked
 	"""
 	def getPossibleCollisions(self, particle):
-		pass
+		return self.data[particle]

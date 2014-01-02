@@ -29,6 +29,8 @@ class PygameModel(Model):
 	" Decide which events should be run
 	"""
 	def collectEvents(self):
+		self.checkCollisions()
+
 		## Check pygame events ##
 		for pyevent in pygame.event.get():
 			if pyevent.type == QUIT:

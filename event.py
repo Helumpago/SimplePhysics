@@ -36,8 +36,9 @@ class Event(EventlessObject):
 	" @param string Name: Name for this object.
 	"""
 	def __init__(self, parent = None, Name = "Event"):
-		EventlessObject.__init__(self, parent = parent, Name = Name)
-		self.fire = False #Flag indicating whether this object can fire its callbacks
+		if parent.getFirst(Name) == None: # Allow only one event object with this name
+			EventlessObject.__init__(self, parent = parent, Name = Name)
+			self.fire = False #Flag indicating whether this object can fire its callbacks
 
 	"""
 	" Method that decides whether the attached callbacks should be run.

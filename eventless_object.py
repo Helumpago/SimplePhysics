@@ -15,7 +15,7 @@ class NamedDictionary(collections.MutableMapping):
 	" CONSTRUCTOR
 	"""
 	def __init__(self):
-		self.children = dict()
+		self.flush()
 
 	"""
 	" Gets the requested set of children
@@ -55,8 +55,17 @@ class NamedDictionary(collections.MutableMapping):
 			else:
 				i += 1
 
+	"""
+	" Clears the underlying dictionary of all entries
+	"""
+	def flush(self):
+		self.children = dict()
+
 	def __iter__(self):
 		return iter(self.children)
+
+	def iterkeys(self):
+		return self.children.iterkeys()
 
 	def __len__(self):
 		return len(self.children)

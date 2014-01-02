@@ -1,4 +1,5 @@
 
+from ..eventless_object import NamedDictionary
 from ..model import Model
 from .collidable import Collidable
 
@@ -35,13 +36,31 @@ class CollisionModel(Model):
 	"""
 	def __init__(self, Name = "CollisionModel", fps = 60, collidables = []):
 		Model.__init__(self, Name = Name, fps = fps)
+		self.collidables = collidables
+		self.mayCollide = NamedDictionary() # Holds info on objects that may be colliding. Key: Reference to object1. Value: List of objects that may be colliding with object1
+
+	"""
+	" Runs the two part collision detection algorithm
+	"""
+	def checkCollisions(self):
+		self.broadPhase()
+		self.narrowPhase()
 
 	"""
 	" Algorithm that decides whether objects could possibly collide (broad phase collision detection)
 	"""
-	def test(self):
-		raise NotImplementedError("test() method left unimplemented")
+	def broadPhase(self):
+		raise NotImplementedError("broadPhase() method left unimplemented")
 
+	"""
+	" Allows all possible collisions to confirm that they are touching
+	"""
+	def narrowPhase(self):
+		for o in self.mayCollide:
+			for target in self.mayCollide[o]:
+				o.events.getFirst("onCollision").fire = o.confirmCollision(target)
+				# target.getFirst("onCollision").fire = target.confirmCollision(o)
+			 
 	"""
 	" Gets the list of objects that may be colliding with a given particle
 	" @param Collidable particle: Reference to the object that should be checked

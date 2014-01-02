@@ -47,12 +47,17 @@ class RectRegion(Region):
 
 	"""
 	" Decides whether a given object is inside this region
-	" @param Region o: Reference to the object to check
+	" @param (Region OR (number X, number Y)) o: Reference to the object to check or position
 	" @return: True if the object is inside.  Otherwise, False
 	"""
 	def isSurrounding(self, o):
 		spos = self.pos.getAValue()
-		opos = o.pos.getAValue()
+
+		if isinstance(o, Region):
+			opos = o.pos.getAValue()
+		else:
+			opos = o
+
 		if (opos[0] >= spos[0] - self.size.getValue()[0]/2 and
 				opos[0] <= spos[0] + self.size.getValue()[0]/2 and
 				opos[1] >= spos[1] - self.size.getValue()[1]/2 and
@@ -95,7 +100,7 @@ class CircleRegion(Region):
 		dist = math.sqrt(math.pow(dx, 2) + math.pow(dy, 2))
 
 		## Ensure that the distance between the points is withing the radius ##
-		if dist < self.radius.getValue():
+		if dist <= self.radius.getValue():
 			return True
 		else:
 			return False

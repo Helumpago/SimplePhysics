@@ -15,8 +15,11 @@ class BaseObj(EventlessObject):
 	"""
 	def __init__(self, parent = None, Name = "Object"):
 		EventlessObject.__init__(self, parent = parent, Name = Name)
-		self.events = EventlessObject(Name = "Events") # Container for all events this object can act on
-		Event(parent = self.events, Name = "onStep") # Contains callbacks to run for each frame
+		try:
+			self.events
+		except AttributeError:
+			self.events = EventlessObject(Name = "Events") # Container for all events this object can act on
+			Event(parent = self.events, Name = "onStep") # Contains callbacks to run for each frame
 
 	"""
 	" Runs all attached events
